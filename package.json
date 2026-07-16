@@ -1,0 +1,17 @@
+{
+  "name": "ulms-monorepo",
+  "version": "1.0.0",
+  "description": "University Learning & Management System (ULMS) Monorepo",
+  "private": true,
+  "workspaces": [
+    "api-gateway",
+    "services/*",
+    "frontend/*",
+    "shared-libs/*"
+  ],
+  "scripts": {
+    "bootstrap": "npm install",
+    "test": "npm test --workspaces --if-present",
+    "lint": "npm run lint --workspaces --if-present"
+  }
+}

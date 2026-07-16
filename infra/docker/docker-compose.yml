@@ -1,0 +1,108 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:6.0
+    container_name: ulms-mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+  redis:
+    image: redis:7.0-alpine
+    container_name: ulms-redis
+    ports:
+      - "6379:6379"
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.3.0
+    container_name: ulms-zookeeper
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+
+  kafka:
+    image: confluentinc/cp-kafka:7.3.0
+    container_name: ulms-kafka
+    ports:
+      - "9092:9092"
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_INTERNAL:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092,PLAINTEXT_INTERNAL://kafka:29092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: ulms-qdrant
+    ports:
+      - "6333:6333"
+      - "6334:6334"
+    volumes:
+      - qdrant-data:/qdrant/storage
+
+  minio:
+    image: minio/minio:latest
+    container_name: ulms-minio
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      MINIO_ROOT_USER: root
+      MINIO_ROOT_PASSWORD: password123
+    command: server /data --console-address ":9001"
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.11.1
+    container_name: ulms-elasticsearch
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+    ports:
+      - "9200:9200"
+
+  api-gateway:
+    build: ../../api-gateway
+    ports:
+      - "8000:8000"
+    depends_on:
+      - redis
+      - mongodb
+
+  auth-service:
+    build: ../../services/auth-service
+    ports:
+      - "5001:3000"
+    depends_on:
+      - mongodb
+      - redis
+      - kafka
+    environment:
+      - PORT=3000
+      - MONGODB_URI=mongodb://mongodb:27017/auth_db
+      - REDIS_URI=redis://redis:6379
+      - KAFKA_BROKERS=kafka:29092
+
+  user-service:
+    build: ../../services/user-service
+    ports:
+      - "5002:3000"
+    depends_on:
+      - mongodb
+      - redis
+      - kafka
+    environment:
+      - PORT=3000
+      - MONGODB_URI=mongodb://mongodb:27017/user_db
+      - REDIS_URI=redis://redis:6379
+      - KAFKA_BROKERS=kafka:29092
+
+volumes:
+  mongo-data:
+  qdrant-data:
