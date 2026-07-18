@@ -1,0 +1,28 @@
+const env = require('./env');
+
+module.exports = {
+  auth:         { url: env.services.auth,         healthPath: '/health' },
+  user:         { url: env.services.user,         healthPath: '/health' },
+  academic:     { url: env.services.academic,     healthPath: '/health' },
+  admission:    { url: env.services.admission,    healthPath: '/health' },
+  enrollment:   { url: env.services.enrollment,   healthPath: '/health' },
+  content:      { url: env.services.content,      healthPath: '/health' },
+  assessment:   { url: env.services.assessment,   healthPath: '/health' },
+  examination:  { url: env.services.examination,  healthPath: '/health' },
+  grading:      { url: env.services.grading,      healthPath: '/health' },
+  attendance:   { url: env.services.attendance,   healthPath: '/health' },
+  timetable:    { url: env.services.timetable,    healthPath: '/health' },
+  finance:      { url: env.services.finance,      healthPath: '/health' },
+  library:      { url: env.services.library,      healthPath: '/health' },
+  hostel:       { url: env.services.hostel,       healthPath: '/health' },
+  notification: { url: env.services.notification, healthPath: '/health' },
+  forum:        { url: env.services.forum,        healthPath: '/health' },
+  liveClass:    { url: env.services.liveClass,    healthPath: '/health' },
+  document:     { url: env.services.document,     healthPath: '/health' },
+  reporting:    { url: env.services.reporting,    healthPath: '/health' },
+  media:        { url: env.services.media,        healthPath: '/health' },
+  search:       { url: env.services.search,       healthPath: '/health' },
+  audit:        { url: env.services.audit,        healthPath: '/health' },
+  calendar:     { url: env.services.calendar,     healthPath: '/health' },
+  aiRag:        { url: env.services.aiRag,        healthPath: '/health' },
+};
