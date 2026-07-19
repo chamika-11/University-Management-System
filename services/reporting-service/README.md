@@ -1,9 +1,9 @@
-# Reporting Service
+# Reporting & Audit Service
 
 ## Overview
-Consumes platform event history to build aggregated read-model dashboards, KPI charts, and schedules document exports.
+Consolidated service that consumes platform event history to build aggregated read-model dashboards, KPI charts, and scheduled document exports. It also maintains a central audit record collection to build a compliance trail, tracking user requests, modifications, and security anomalies.
 
-- **Database:** `reporting_db`
+- **Database:** `reporting_db` (handles reports configurations, snapshots, KPI metrics, and audit/security logs)
 
 ## Architecture Details
 
@@ -12,24 +12,30 @@ Consumes platform event history to build aggregated read-model dashboards, KPI c
 - **ReportSnapshot**
 - **DashboardConfig**
 - **KpiMetric**
+- **AuditLog**
+- **SecurityEvent**
 
 ### Controllers
 - **ReportController**
 - **DashboardController**
+- **AuditController**
 
 ### Services
 - **DataAggregationService**
 - **ReportGenerationService**
 - **KpiComputationService**
 - **ExportService**
+- **AuditTrailService**
+- **SecurityEventDetectionService**
+- **ComplianceReportService**
 
 ## Event-Driven Integration (Kafka)
 
 ### Publishes (Outbound Events)
-- None
+- `SuspiciousActivityDetected`
 
 ### Consumes (Inbound Events)
-- `* (Consumes events for CQRS read-model tables)`
+- `* (Consumes all events for CQRS analytics and compliance auditing)`
 
 ## Implementation Details & Code Structure
 This microservice follows the standard Node.js/Express template structure:

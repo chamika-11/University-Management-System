@@ -1,9 +1,9 @@
-# Timetable Service
+# Timetable, Calendar & Attendance Service
 
 ## Overview
-Computes optimal class timings, schedules room booking allocations, maps faculty availability constraints, and tracks timetable configurations.
+Consolidated service managing optimal class timings, room booking allocations, faculty availability constraints, academic calendars, holidays, institutional milestones, personal events, ICS exports, student attendance records for physical classes and live sessions, leave requests, and low-attendance indicators.
 
-- **Database:** `timetable_db`
+- **Database:** `timetable_db` (handles schedules, calendars, and attendance logs)
 
 ## Architecture Details
 
@@ -12,24 +12,48 @@ Computes optimal class timings, schedules room booking allocations, maps faculty
 - **ClassSlot**
 - **RoomAllocation**
 - **FacultySchedule**
+- **AcademicEvent**
+- **Holiday**
+- **PersonalEvent**
+- **EventReminder**
+- **AttendanceRecord**
+- **AttendanceSession**
+- **LeaveRequest**
+- **AttendancePolicy**
 
 ### Controllers
 - **TimetableController**
 - **RoomAllocationController**
+- **EventController**
+- **HolidayController**
+- **AttendanceController**
+- **LeaveController**
 
 ### Services
 - **TimetableGenerationService**
 - **ConflictResolutionService**
 - **RoomBookingService**
+- **CalendarService**
+- **ReminderSchedulingService**
+- **IcsExportService**
+- **AttendanceMarkingService**
+- **AttendanceReportService**
+- **LeaveApprovalService**
+- **LowAttendanceAlertService**
 
 ## Event-Driven Integration (Kafka)
 
 ### Publishes (Outbound Events)
 - `TimetablePublished`
+- `EventCreated`
+- `LowAttendanceAlert`
 
 ### Consumes (Inbound Events)
 - `CourseCreated`
 - `FacultyProfileCreated`
+- `ExamScheduled`
+- `LiveSessionEnded (auto-mark)`
+- `EnrollmentConfirmed`
 
 ## Implementation Details & Code Structure
 This microservice follows the standard Node.js/Express template structure:

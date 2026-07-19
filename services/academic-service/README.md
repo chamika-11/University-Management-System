@@ -1,9 +1,9 @@
-# Academic Service
+# Academic & Enrollment Service
 
 ## Overview
-Core catalog service managing colleges, departments, programs, courses, syllabus documents, curriculum paths, and semesters.
+Consolidated catalog and enrollment registration service managing colleges, departments, programs, courses, syllabus documents, curriculum paths, semesters, course registration windows, section assignments, seat allocations, waitlists, and prerequisite verifications.
 
-- **Database:** `academic_db`
+- **Database:** `academic_db` (handles catalog and enrollment records)
 
 ## Architecture Details
 
@@ -17,6 +17,11 @@ Core catalog service managing colleges, departments, programs, courses, syllabus
 - **Prerequisite**
 - **Semester**
 - **AcademicYear**
+- **Enrollment**
+- **CourseSection**
+- **Seat**
+- **WaitlistEntry**
+- **RegistrationWindow**
 
 ### Controllers
 - **DepartmentController**
@@ -24,21 +29,33 @@ Core catalog service managing colleges, departments, programs, courses, syllabus
 - **CourseController**
 - **CurriculumController**
 - **SemesterController**
+- **EnrollmentController**
+- **CourseSectionController**
+- **WaitlistController**
 
 ### Services
 - **CourseCatalogService**
 - **CurriculumBuilderService**
 - **PrerequisiteValidationService**
 - **AcademicCalendarSyncService**
+- **RegistrationService**
+- **SeatAllocationService**
+- **WaitlistService**
+- **PrerequisiteCheckService**
+- **TimetableConflictCheckService**
 
 ## Event-Driven Integration (Kafka)
 
 ### Publishes (Outbound Events)
 - `CourseCreated`
 - `CurriculumUpdated`
+- `EnrollmentRequested`
+- `EnrollmentConfirmed`
+- `EnrollmentFailed`
+- `SeatReleased`
 
 ### Consumes (Inbound Events)
-- None
+- `PaymentCompleted`
 
 ## Implementation Details & Code Structure
 This microservice follows the standard Node.js/Express template structure:
