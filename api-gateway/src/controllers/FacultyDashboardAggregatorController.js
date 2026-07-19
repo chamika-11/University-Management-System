@@ -13,7 +13,7 @@ class FacultyDashboardAggregatorController {
         
         const requests = [
           { key: 'profile', serviceName: 'user', path: `/api/v1/users/faculty/${userId}`, headers },
-          { key: 'sections', serviceName: 'enrollment', path: `/api/v1/enrollments/sections/faculty/${userId}`, headers },
+          { key: 'sections', serviceName: 'academic', path: `/api/v1/enrollments/sections/faculty/${userId}`, headers },
           { key: 'schedule', serviceName: 'timetable', path: `/api/v1/timetable/faculty/${userId}`, headers },
           { key: 'assessmentsPending', serviceName: 'assessment', path: `/api/v1/assessments/pending-grading/faculty/${userId}`, headers },
           { key: 'notifications', serviceName: 'notification', path: `/api/v1/notifications/user/${userId}/unread`, headers }

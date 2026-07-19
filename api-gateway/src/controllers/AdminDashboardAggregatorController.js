@@ -15,7 +15,7 @@ class AdminDashboardAggregatorController {
           { key: 'profile', serviceName: 'user', path: `/api/v1/users/admin/${userId}`, headers },
           { key: 'admissionsStats', serviceName: 'admission', path: '/api/v1/admissions/stats/summary', headers },
           { key: 'financeOverview', serviceName: 'finance', path: '/api/v1/finance/stats/overview', headers },
-          { key: 'activeAudits', serviceName: 'audit', path: '/api/v1/audit/recent-alerts', headers },
+          { key: 'activeAudits', serviceName: 'reporting', path: '/api/v1/audit/recent-alerts', headers },
           { key: 'reports', serviceName: 'reporting', path: '/api/v1/reports/kpis/summary', headers }
         ];
 

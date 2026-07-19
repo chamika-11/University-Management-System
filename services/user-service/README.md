@@ -1,13 +1,20 @@
-# User Service
+# User & Auth Service
 
 ## Overview
-Manages core profiles for students, faculty, administrators, and staff, including address details and emergency contacts.
+Consolidated service managing authentication, roles, permissions, SSO integration, session management, Multi-Factor Authentication (MFA), and core profiles for students, faculty, administrators, and staff (including address details and emergency contacts).
 
-- **Database:** `user_db`
+- **Database:** `user_db` (handles profile and authentication details)
 
 ## Architecture Details
 
 ### Models / Collections
+- **User**
+- **Role**
+- **Permission**
+- **RefreshToken**
+- **PasswordResetToken**
+- **LoginAudit**
+- **MfaConfig**
 - **StudentProfile**
 - **FacultyProfile**
 - **AdminProfile**
@@ -16,12 +23,23 @@ Manages core profiles for students, faculty, administrators, and staff, includin
 - **EmergencyContact**
 
 ### Controllers
+- **AuthController**
+- **RoleController**
+- **PermissionController**
+- **SessionController**
+- **MfaController**
 - **StudentProfileController**
 - **FacultyProfileController**
 - **AdminProfileController**
 - **StaffProfileController**
 
 ### Services
+- **AuthService**
+- **TokenService**
+- **PasswordService**
+- **RBACService**
+- **MfaService**
+- **SsoIntegrationService (SAML/OAuth2)**
 - **ProfileService**
 - **ProfileValidationService**
 - **ProfileSearchService**
@@ -30,11 +48,14 @@ Manages core profiles for students, faculty, administrators, and staff, includin
 ## Event-Driven Integration (Kafka)
 
 ### Publishes (Outbound Events)
+- `UserRegistered`
+- `UserLoggedIn`
+- `PasswordChanged`
+- `AccountLocked`
 - `UserProfileCreated`
 - `ProfileUpdated`
 
 ### Consumes (Inbound Events)
-- `UserRegistered`
 - `AdmissionConfirmed`
 
 ## Implementation Details & Code Structure

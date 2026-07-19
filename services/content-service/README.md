@@ -1,9 +1,9 @@
-# Content Service
+# Content & Live Class Service
 
 ## Overview
-Core LMS module dealing with course sections, lessons, video content, assets, version tracking, learning paths, and SCORM support.
+Consolidated learning management module dealing with course sections, lessons, video content, assets, version tracking, learning paths, SCORM support, third-party live conferencing (Zoom, BBB), attendee logging, and video recordings.
 
-- **Database:** `content_db`
+- **Database:** `content_db` (handles course content and live session details)
 
 ## Architecture Details
 
@@ -15,28 +15,40 @@ Core LMS module dealing with course sections, lessons, video content, assets, ve
 - **ContentVersion**
 - **LearningPath**
 - **SCORMPackage**
+- **LiveSession**
+- **MeetingLink**
+- **Recording**
+- **SessionAttendanceLog**
 
 ### Controllers
 - **ModuleController**
 - **LessonController**
 - **ContentController**
 - **ResourceController**
+- **LiveSessionController**
+- **RecordingController**
 
 ### Services
 - **ContentPublishingService**
 - **ContentVersioningService**
 - **ContentAccessControlService**
 - **SCORMImportService**
+- **MeetingProviderIntegrationService**
+- **RecordingService**
+- **SessionAttendanceSyncService**
 
 ## Event-Driven Integration (Kafka)
 
 ### Publishes (Outbound Events)
 - `ContentPublished`
 - `ContentUpdated`
+- `LiveSessionScheduled`
+- `LiveSessionEnded`
 
 ### Consumes (Inbound Events)
 - `EnrollmentConfirmed`
 - `FileUploaded`
+- `TimetablePublished`
 
 ## Implementation Details & Code Structure
 This microservice follows the standard Node.js/Express template structure:

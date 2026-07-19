@@ -1,9 +1,9 @@
-# Document Service
+# Document & Media Service
 
 ## Overview
-Generates diplomas, certificates, official PDFs, digital hashing, and handles QR code public transcript verifications.
+Consolidated service managing binary asset uploads to storage (MinIO/S3), file schemas, antivirus checks, thumbnail calculations, official PDF generation (diplomas, certificates), digital hashing, and QR-based public transcript verifications.
 
-- **Database:** `document_db`
+- **Database:** `document_db` (handles document templates, issued files, and file metadata)
 
 ## Architecture Details
 
@@ -12,21 +12,31 @@ Generates diplomas, certificates, official PDFs, digital hashing, and handles QR
 - **IssuedCertificate**
 - **DigitalSignature**
 - **VerificationRequest**
+- **FileMetadata**
+- **UploadSession**
 
 ### Controllers
 - **CertificateController**
 - **VerificationController**
+- **UploadController**
+- **FileController**
 
 ### Services
 - **CertificateGenerationService**
 - **DigitalSigningService**
 - **PublicVerificationService**
 - **TranscriptExportService**
+- **StorageService (S3/MinIO)**
+- **FileValidationService**
+- **VirusScanService**
+- **ThumbnailGenerationService**
 
 ## Event-Driven Integration (Kafka)
 
 ### Publishes (Outbound Events)
 - `CertificateIssued`
+- `FileUploaded`
+- `FileDeleted`
 
 ### Consumes (Inbound Events)
 - `DegreeCompletionDetected`

@@ -14,9 +14,9 @@ class StudentDashboardAggregatorController {
         // Parallel requests fanning out to individual services
         const requests = [
           { key: 'profile', serviceName: 'user', path: `/api/v1/users/students/${userId}`, headers },
-          { key: 'enrollments', serviceName: 'enrollment', path: `/api/v1/enrollments/student/${userId}`, headers },
+          { key: 'enrollments', serviceName: 'academic', path: `/api/v1/enrollments/student/${userId}`, headers },
           { key: 'grades', serviceName: 'grading', path: `/api/v1/grades/student/${userId}/gpa`, headers },
-          { key: 'attendance', serviceName: 'attendance', path: `/api/v1/attendance/student/${userId}/summary`, headers },
+          { key: 'attendance', serviceName: 'timetable', path: `/api/v1/attendance/student/${userId}/summary`, headers },
           { key: 'finances', serviceName: 'finance', path: `/api/v1/finance/invoices/student/${userId}`, headers },
           { key: 'notifications', serviceName: 'notification', path: `/api/v1/notifications/user/${userId}/unread`, headers }
         ];
