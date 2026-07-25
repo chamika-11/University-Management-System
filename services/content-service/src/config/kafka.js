@@ -1,4 +1,4 @@
-﻿'use strict';
+'use strict';
 const { Kafka, logLevel } = require('kafkajs');
 const env = require('./env');
 const logger = require('../utils/logger');
@@ -11,7 +11,7 @@ const connectKafka = async () => {
     await producer.connect(); isProducerConnected = true; logger.info('[Kafka] Producer connected');
     const { startConsumers } = require('../events/consumer');
     await startConsumers();
-  } catch (err) { logger.warn(\[Kafka] Unavailable: \\); }
+  } catch (err) { logger.warn(`[Kafka] Unavailable: ${err.message}`); }
 };
 const disconnectKafka = async () => {
   try { for (const c of consumers) await c.disconnect(); await producer.disconnect(); isProducerConnected = false; } catch(e) {}

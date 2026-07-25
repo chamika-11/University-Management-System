@@ -253,7 +253,7 @@ services:
     build: ../../services/library-service
     container_name: ulms-library-service
     ports:
-      - "5013:3000"
+      - "5008:3000"
     depends_on:
       - mongodb
       - redis
@@ -327,20 +327,19 @@ services:
       - MONGODB_URI=mongodb://mongodb:27017/timetable_db
       - REDIS_URI=redis://redis:6379
       - KAFKA_BROKERS=kafka:29092
-
-  ai-rag-service:
-    build: ../../services/ai-rag-service
-    container_name: ulms-ai-rag-service
-    ports:
-      - "5024:8000"
-    depends_on:
-      - mongodb
-      - qdrant
-    environment:
-      - MONGO_URI=mongodb://mongodb:27017/ai_rag_db
-      - QDRANT_HOST=qdrant
-      - QDRANT_PORT=6333
-      - LLM_API_KEY=
+  # ai-rag-service:
+  #   build: ../../services/ai-rag-service
+  #   container_name: ulms-ai-rag-service
+  #   ports:
+  #     - "5024:8000"
+  #   depends_on:
+  #     - mongodb
+  #     - qdrant
+  #   environment:
+  #     - MONGO_URI=mongodb://mongodb:27017/ai_rag_db
+  #     - QDRANT_HOST=qdrant
+  #     - QDRANT_PORT=6333
+  #     - LLM_API_KEY=
 
 volumes:
   mongo-data:

@@ -1,4 +1,4 @@
-﻿'use strict';
+'use strict';
 const redis = require('redis');
 const env = require('./env');
 const logger = require('../utils/logger');
@@ -8,7 +8,7 @@ const connectRedis = async () => {
   client.on('ready', () => { isConnected = true; logger.info('[Redis] Connected'); });
   client.on('error', (err) => logger.error('[Redis] Error:', err.message));
   client.on('end', () => { isConnected = false; });
-  try { await client.connect(); } catch(err) { logger.warn(\[Redis] Unavailable: \\); client = null; }
+  try { await client.connect(); } catch(err) { logger.warn(`[Redis] Unavailable: ${err.message}`); client = null; }
 };
 const disconnectRedis = async () => { if (client) { await client.quit(); isConnected = false; } };
 module.exports = { connectRedis, disconnectRedis, getRedisClient: () => client, isRedisHealthy: () => isConnected };

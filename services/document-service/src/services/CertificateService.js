@@ -1,7 +1,6 @@
 'use strict';
 
 const crypto = require('crypto');
-const IssuedCertificate = require('../models/IssuedCertificate');
 const IssuedCertificateModel = require('../models/IssuedCertificate.model');
 const AppError = require('../utils/AppError');
 const publisher = require('../events/publisher');
