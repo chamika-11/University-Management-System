@@ -1,7 +1,12 @@
+﻿'use strict';
 require('dotenv').config();
+const required = (k) => { const v = process.env[k]; if (!v) throw new Error(\[ENV] Missing: \\); return v; };
+const optional = (k, fb = '') => process.env[k] || fb;
 module.exports = {
-  PORT: process.env.PORT || 3000,
-  MONGODB_URI: process.env.MONGODB_URI,
-  REDIS_URI: process.env.REDIS_URI,
-  KAFKA_BROKERS: process.env.KAFKA_BROKERS ? process.env.KAFKA_BROKERS.split(',') : ['localhost:9092']
+  NODE_ENV:      optional('NODE_ENV', 'development'),
+  PORT:          parseInt(optional('PORT', '5013'), 10),
+  MONGODB_URI:   required('MONGODB_URI'),
+  REDIS_URI:     optional('REDIS_URI', 'redis://localhost:6379'),
+  KAFKA_BROKERS: optional('KAFKA_BROKERS', 'localhost:9092').split(','),
+  KAFKA_CLIENT_ID: optional('KAFKA_CLIENT_ID', 'examination-service'),
 };
