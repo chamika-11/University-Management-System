@@ -10,5 +10,5 @@ const admissionCycleSchema = new mongoose.Schema({
   isActive:    { type: Boolean, default: true },
 }, { timestamps: true });
 
-admissionCycleSchema.index({ code: 1 }, { unique: true });
+
 module.exports = mongoose.model('AdmissionCycle', admissionCycleSchema);

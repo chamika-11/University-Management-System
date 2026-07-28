@@ -28,6 +28,6 @@ const staffProfileSchema = new mongoose.Schema(
 );
 
 staffProfileSchema.virtual('fullName').get(function () { return `${this.firstName} ${this.lastName}`; });
-staffProfileSchema.index({ employeeId: 1 }, { unique: true });
+
 
 module.exports = mongoose.model('StaffProfile', staffProfileSchema);

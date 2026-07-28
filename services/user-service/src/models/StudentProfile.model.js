@@ -47,7 +47,7 @@ studentProfileSchema.virtual('fullName').get(function () {
   return `${this.firstName} ${this.lastName}`;
 });
 
-studentProfileSchema.index({ studentId: 1 }, { unique: true });
+
 studentProfileSchema.index({ programId: 1, enrollmentStatus: 1 });
 studentProfileSchema.index({ firstName: 'text', lastName: 'text' });
 

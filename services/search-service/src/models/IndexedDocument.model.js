@@ -11,6 +11,6 @@ const indexedDocumentSchema = new mongoose.Schema({
   metadata:    { type: mongoose.Schema.Types.Mixed, default: {} },
 }, { timestamps: true });
 
-indexedDocumentSchema.index({ entityId: 1 }, { unique: true });
+
 indexedDocumentSchema.index({ title: 'text', content: 'text', category: 'text' });
 module.exports = mongoose.model('IndexedDocument', indexedDocumentSchema);

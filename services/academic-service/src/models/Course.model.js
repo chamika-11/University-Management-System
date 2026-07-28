@@ -19,7 +19,7 @@ courseSchema.virtual('prerequisites', {
   foreignField: 'courseId',
 });
 
-courseSchema.index({ code: 1 }, { unique: true });
+
 courseSchema.index({ departmentId: 1, type: 1 });
 courseSchema.index({ title: 'text', code: 'text' });
 

@@ -23,6 +23,6 @@ const adminProfileSchema = new mongoose.Schema(
 );
 
 adminProfileSchema.virtual('fullName').get(function () { return `${this.firstName} ${this.lastName}`; });
-adminProfileSchema.index({ employeeId: 1 }, { unique: true });
+
 
 module.exports = mongoose.model('AdminProfile', adminProfileSchema);

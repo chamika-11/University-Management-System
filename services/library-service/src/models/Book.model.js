@@ -12,6 +12,6 @@ const bookSchema = new mongoose.Schema({
   shelfLocation: { type: String, trim: true, default: 'TBD' },
 }, { timestamps: true });
 
-bookSchema.index({ isbn: 1 }, { unique: true });
+
 bookSchema.index({ title: 'text', author: 'text' });
 module.exports = mongoose.model('Book', bookSchema);

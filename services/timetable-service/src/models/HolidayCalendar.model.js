@@ -11,5 +11,5 @@ const holidaySchema = new mongoose.Schema({
   isRecurring: { type: Boolean, default: false }, // Repeat every year
 }, { timestamps: true });
 
-holidaySchema.index({ date: 1 });
+
 module.exports = mongoose.model('HolidayCalendar', holidaySchema);

@@ -52,7 +52,7 @@ facultyProfileSchema.virtual('fullName').get(function () {
   return `${this.firstName} ${this.lastName}`;
 });
 
-facultyProfileSchema.index({ employeeId: 1 }, { unique: true });
+
 facultyProfileSchema.index({ departmentId: 1, status: 1 });
 facultyProfileSchema.index({ firstName: 'text', lastName: 'text' });
 

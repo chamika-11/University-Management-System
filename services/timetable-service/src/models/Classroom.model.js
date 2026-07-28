@@ -13,5 +13,5 @@ const classroomSchema = new mongoose.Schema({
   isAvailable:   { type: Boolean, default: true },
 }, { timestamps: true });
 
-classroomSchema.index({ code: 1 }, { unique: true });
+
 module.exports = mongoose.model('Classroom', classroomSchema);

@@ -22,6 +22,6 @@ const emergencyContactSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-emergencyContactSchema.index({ ownerId: 1 });
+
 
 module.exports = mongoose.model('EmergencyContact', emergencyContactSchema);
