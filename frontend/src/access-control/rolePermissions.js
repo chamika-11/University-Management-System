@@ -1,0 +1,86 @@
+import { PERMISSIONS } from './permissions';
+
+/**
+ * Role-to-Permissions fallback table for client-side resolution.
+ * If backend session does not return explicit permissions array,
+ * client infers permission capabilities from active roleDoc.
+ */
+export const ROLE_PERMISSIONS_MAP = {
+  STUDENT: [
+    PERMISSIONS.STUDENT_DASHBOARD_READ,
+    PERMISSIONS.COURSES_READ,
+    PERMISSIONS.COURSES_ENROLL,
+    PERMISSIONS.ASSESSMENTS_READ,
+    PERMISSIONS.ASSESSMENTS_SUBMIT,
+    PERMISSIONS.GRADES_READ_OWN,
+    PERMISSIONS.GRADES_APPEAL,
+    PERMISSIONS.TRANSCRIPT_READ,
+    PERMISSIONS.LIBRARY_SEARCH,
+    PERMISSIONS.LIBRARY_BORROW,
+    PERMISSIONS.FEE_PAYMENT,
+    PERMISSIONS.TIMETABLE_READ,
+    PERMISSIONS.FORUM_POST,
+    PERMISSIONS.CERTIFICATES_READ,
+  ],
+
+  FACULTY: [
+    PERMISSIONS.FACULTY_DASHBOARD_READ,
+    PERMISSIONS.COURSES_READ,
+    PERMISSIONS.SECTIONS_MANAGE,
+    PERMISSIONS.CONTENT_AUTHOR,
+    PERMISSIONS.GRADES_WRITE,
+    PERMISSIONS.GRADES_SUBMIT,
+    PERMISSIONS.ATTENDANCE_MARK,
+    PERMISSIONS.TIMETABLE_READ,
+    PERMISSIONS.FORUM_POST,
+    PERMISSIONS.FORUM_MODERATE,
+  ],
+
+  STAFF: [
+    PERMISSIONS.FACULTY_DASHBOARD_READ,
+    PERMISSIONS.COURSES_READ,
+    PERMISSIONS.SECTIONS_MANAGE,
+    PERMISSIONS.ATTENDANCE_MARK,
+    PERMISSIONS.TIMETABLE_READ,
+    PERMISSIONS.USERS_READ,
+  ],
+
+  ADMIN: [
+    PERMISSIONS.ADMIN_DASHBOARD_READ,
+    PERMISSIONS.USERS_READ,
+    PERMISSIONS.USERS_WRITE,
+    PERMISSIONS.USERS_LOCK,
+    PERMISSIONS.ROLES_MANAGE,
+    PERMISSIONS.ADMISSIONS_EVALUATE,
+    PERMISSIONS.CATALOG_MANAGE,
+    PERMISSIONS.SEMESTERS_MANAGE,
+    PERMISSIONS.FINANCE_OVERSIGHT,
+    PERMISSIONS.REPORTS_GENERATE,
+    PERMISSIONS.AUDIT_READ,
+    PERMISSIONS.NOTIFICATIONS_ADMIN,
+    PERMISSIONS.DOCUMENTS_ISSUE,
+    PERMISSIONS.SEARCH_REINDEX,
+    PERMISSIONS.COURSES_READ,
+    PERMISSIONS.TIMETABLE_READ,
+  ],
+
+  SUPER_ADMIN: Object.values(PERMISSIONS),
+};
+
+/**
+ * Resolves permissions for a user given their roles array and explicit permissions array.
+ */
+export function resolveUserPermissions(roles = [], explicitPermissions = []) {
+  if (Array.isArray(explicitPermissions) && explicitPermissions.length > 0) {
+    return Array.from(new Set(explicitPermissions));
+  }
+
+  const resolved = new Set();
+  (roles || []).forEach((role) => {
+    const roleUpper = (role || '').toUpperCase();
+    const mapped = ROLE_PERMISSIONS_MAP[roleUpper] || [];
+    mapped.forEach((p) => resolved.add(p));
+  });
+
+  return Array.from(resolved);
+}

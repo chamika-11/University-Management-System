@@ -7,8 +7,8 @@ const AdminDashboardAggregatorController = require('../controllers/AdminDashboar
 
 const router = express.Router();
 
-router.get('/student/dashboard', authVerify, requireRole('student'), StudentDashboardAggregatorController.getDashboard);
-router.get('/faculty/dashboard', authVerify, requireRole('faculty'), FacultyDashboardAggregatorController.getDashboard);
-router.get('/admin/dashboard', authVerify, requireRole('admin', 'super_admin'), AdminDashboardAggregatorController.getDashboard);
+router.get('/student/dashboard', authVerify, requireRole('STUDENT'), StudentDashboardAggregatorController.getDashboard);
+router.get('/faculty/dashboard', authVerify, requireRole('FACULTY'), FacultyDashboardAggregatorController.getDashboard);
+router.get('/admin/dashboard', authVerify, requireRole('ADMIN', 'SUPER_ADMIN'), AdminDashboardAggregatorController.getDashboard);
 
 module.exports = router;

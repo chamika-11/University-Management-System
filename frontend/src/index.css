@@ -1,0 +1,85 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── CSS Custom Properties ─────────────────────────────────────── */
+:root {
+  --sidebar-width: 260px;
+  --sidebar-collapsed-width: 68px;
+  --topbar-height: 64px;
+  --transition-fast: 150ms ease;
+  --transition-base: 200ms ease;
+  --transition-slow: 300ms ease;
+}
+
+/* ── Base Resets ────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background-color: #020817;
+  color: #f1f5f9;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Custom Scrollbar ──────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #475569; }
+
+/* ── Focus Ring ────────────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid #6366f1;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ── Glassmorphism Card ────────────────────────────────────────── */
+.glass-card {
+  background: rgba(30, 41, 59, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+}
+
+/* ── Sidebar Link Styling ──────────────────────────────────────── */
+.sidebar-link {
+  @apply flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400
+         text-sm font-medium transition-all duration-150
+         hover:bg-white/5 hover:text-slate-100;
+}
+.sidebar-link.active {
+  @apply bg-indigo-500/15 text-indigo-400 ring-1 ring-indigo-500/30;
+}
+.sidebar-link.active svg { @apply text-indigo-400; }
+
+/* ── Badges ────────────────────────────────────────────────────── */
+.badge-emerald { @apply bg-emerald-500/15 text-emerald-400 ring-1 ring-emerald-500/30; }
+.badge-amber   { @apply bg-amber-500/15  text-amber-400  ring-1 ring-amber-500/30;  }
+.badge-rose    { @apply bg-rose-500/15   text-rose-400   ring-1 ring-rose-500/30;   }
+.badge-indigo  { @apply bg-indigo-500/15 text-indigo-400 ring-1 ring-indigo-500/30; }
+.badge-slate   { @apply bg-slate-500/15  text-slate-400  ring-1 ring-slate-500/30;  }
+.badge-sky     { @apply bg-sky-500/15    text-sky-400    ring-1 ring-sky-500/30;    }
+
+/* ── Card Utility ──────────────────────────────────────────────── */
+.card {
+  @apply bg-slate-900 border border-white/5 rounded-xl p-5;
+}
+.card-sm {
+  @apply bg-slate-900 border border-white/5 rounded-lg p-4;
+}
+
+.page-title {
+  @apply text-xl font-semibold text-slate-100 tracking-tight;
+}
+.page-subtitle {
+  @apply text-sm text-slate-500 mt-0.5;
+}

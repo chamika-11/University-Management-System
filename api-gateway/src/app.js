@@ -11,7 +11,12 @@ const errorHandler = require('./middlewares/errorHandler.middleware');
 const app = express();
 
 app.use(helmet());
-app.use(cors());
+app.use(cors({
+  origin: (origin, callback) => callback(null, origin || true),
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'x-request-id'],
+}));
 app.use(requestLogger);
 app.use(globalLimiter);
 
