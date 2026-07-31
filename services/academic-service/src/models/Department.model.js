@@ -11,6 +11,5 @@ const departmentSchema = new mongoose.Schema({
   isActive:   { type: Boolean, default: true },
 }, { timestamps: true });
 
-departmentSchema.index({ code: 1 }, { unique: true });
-departmentSchema.index({ collegeId: 1 });
+
 module.exports = mongoose.model('Department', departmentSchema);

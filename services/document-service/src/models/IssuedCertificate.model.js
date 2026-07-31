@@ -11,5 +11,5 @@ const issuedCertificateSchema = new mongoose.Schema({
   verificationToken: { type: String, required: true, unique: true }, // For QR public lookups
 }, { timestamps: true });
 
-issuedCertificateSchema.index({ verificationToken: 1 }, { unique: true });
+
 module.exports = mongoose.model('IssuedCertificate', issuedCertificateSchema);

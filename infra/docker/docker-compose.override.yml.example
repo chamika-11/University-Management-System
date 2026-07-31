@@ -1,13 +1,9 @@
-version: '3.8'
+version: "3.8"
 services:
   # Overrides for mounting local code to hot reload in dev environment
   api-gateway:
     volumes:
       - ../../api-gateway:/app
-      - /app/node_modules
-  auth-service:
-    volumes:
-      - ../../services/auth-service:/app
       - /app/node_modules
   user-service:
     volumes:

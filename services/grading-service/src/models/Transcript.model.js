@@ -14,5 +14,5 @@ const transcriptSchema = new mongoose.Schema({
   isVerified:    { type: Boolean, default: false },
 }, { timestamps: true });
 
-transcriptSchema.index({ studentId: 1 }, { unique: true });
+
 module.exports = mongoose.model('Transcript', transcriptSchema);

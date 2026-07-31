@@ -13,6 +13,5 @@ const programSchema = new mongoose.Schema({
   isActive:      { type: Boolean, default: true },
 }, { timestamps: true });
 
-programSchema.index({ code: 1 }, { unique: true });
-programSchema.index({ departmentId: 1 });
+
 module.exports = mongoose.model('Program', programSchema);

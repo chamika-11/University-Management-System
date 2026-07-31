@@ -11,5 +11,5 @@ const collegeSchema = new mongoose.Schema({
   isActive:    { type: Boolean, default: true },
 }, { timestamps: true });
 
-collegeSchema.index({ code: 1 }, { unique: true });
+
 module.exports = mongoose.model('College', collegeSchema);

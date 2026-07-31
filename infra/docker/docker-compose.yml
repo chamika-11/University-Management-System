@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.8"
 
 services:
   mongodb:
@@ -31,7 +31,7 @@ services:
       - zookeeper
     environment:
       KAFKA_BROKER_ID: 1
-      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
+      KAFKA_ZOOKEEPER_CONNECT: "zookeeper:2181"
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_INTERNAL:PLAINTEXT
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092,PLAINTEXT_INTERNAL://kafka:29092
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
@@ -64,33 +64,43 @@ services:
     environment:
       - discovery.type=single-node
       - xpack.security.enabled=false
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
     ports:
       - "9200:9200"
 
   api-gateway:
     build: ../../api-gateway
+    container_name: ulms-api-gateway
     ports:
       - "8000:8000"
     depends_on:
       - redis
       - mongodb
-
-  auth-service:
-    build: ../../services/auth-service
-    ports:
-      - "5001:3000"
-    depends_on:
-      - mongodb
-      - redis
-      - kafka
+      - user-service
     environment:
-      - PORT=3000
-      - MONGODB_URI=mongodb://mongodb:27017/auth_db
+      - PORT=8000
       - REDIS_URI=redis://redis:6379
-      - KAFKA_BROKERS=kafka:29092
+      - USER_SERVICE_URL=http://user-service:3000
+      - ACADEMIC_SERVICE_URL=http://academic-service:3000
+      - ADMISSION_SERVICE_URL=http://admission-service:3000
+      - CONTENT_SERVICE_URL=http://content-service:3000
+      - ASSESSMENT_SERVICE_URL=http://assessment-service:3000
+      - EXAMINATION_SERVICE_URL=http://examination-service:3000
+      - GRADING_SERVICE_URL=http://grading-service:3000
+      - TIMETABLE_SERVICE_URL=http://timetable-service:3000
+      - FINANCE_SERVICE_URL=http://finance-service:3000
+      - LIBRARY_SERVICE_URL=http://library-service:3000
+      - NOTIFICATION_SERVICE_URL=http://notification-service:3000
+      - FORUM_SERVICE_URL=http://forum-service:3000
+      - DOCUMENT_SERVICE_URL=http://document-service:3000
+      - REPORTING_SERVICE_URL=http://reporting-service:3000
+      - SEARCH_SERVICE_URL=http://search-service:3000
+      - AI_RAG_SERVICE_URL=http://ai-rag-service:8000
+      - JWT_SECRET=supersecretkey
 
   user-service:
     build: ../../services/user-service
+    container_name: ulms-user-service
     ports:
       - "5002:3000"
     depends_on:
@@ -102,6 +112,234 @@ services:
       - MONGODB_URI=mongodb://mongodb:27017/user_db
       - REDIS_URI=redis://redis:6379
       - KAFKA_BROKERS=kafka:29092
+      - JWT_SECRET=supersecretkey
+
+  academic-service:
+    build: ../../services/academic-service
+    container_name: ulms-academic-service
+    ports:
+      - "5003:3000"
+    depends_on:
+      - mongodb
+      - redis
+      - kafka
+    environment:
+      - PORT=3000
+      - MONGODB_URI=mongodb://mongodb:27017/academic_db
+      - REDIS_URI=redis://redis:6379
+      - KAFKA_BROKERS=kafka:29092
+
+  admission-service:
+    build: ../../services/admission-service
+    container_name: ulms-admission-service
+    ports:
+      - "5001:3000"
+    depends_on:
+      - mongodb
+      - redis
+      - kafka
+    environment:
+      - PORT=3000
+      - MONGODB_URI=mongodb://mongodb:27017/admission_db
+      - REDIS_URI=redis://redis:6379
+      - KAFKA_BROKERS=kafka:29092
+
+  assessment-service:
+    build: ../../services/assessment-service
+    container_name: ulms-assessment-service
+    ports:
+      - "5014:3000"
+    depends_on:
+      - mongodb
+      - redis
+      - kafka
+    environment:
+      - PORT=3000
+      - MONGODB_URI=mongodb://mongodb:27017/assessment_db
+      - REDIS_URI=redis://redis:6379
+      - KAFKA_BROKERS=kafka:29092
+
+  content-service:
+    build: ../../services/content-service
+    container_name: ulms-content-service
+    ports:
+      - "5006:3000"
+    depends_on:
+      - mongodb
+      - redis
+      - kafka
+    environment:
+      - PORT=3000
+      - MONGODB_URI=mongodb://mongodb:27017/content_db
+      - REDIS_URI=redis://redis:6379
+      - KAFKA_BROKERS=kafka:29092
+
+  document-service:
+    build: ../../services/document-service
+    container_name: ulms-document-service
+    ports:
+      - "5005:3000"
+    depends_on:
+      - mongodb
+      - redis
+      - kafka
+    environment:
+      - PORT=3000
+      - MONGODB_URI=mongodb://mongodb:27017/document_db
+      - REDIS_URI=redis://redis:6379
+      - KAFKA_BROKERS=kafka:29092
+
+  examination-service:
+    build: ../../services/examination-service
+    container_name: ulms-examination-service
+    ports:
+      - "5013:3000"
+    depends_on:
+      - mongodb
+      - redis
+      - kafka
+    environment:
+      - PORT=3000
+      - MONGODB_URI=mongodb://mongodb:27017/examination_db
+      - REDIS_URI=redis://redis:6379
+      - KAFKA_BROKERS=kafka:29092
+
+  finance-service:
+    build: ../../services/finance-service
+    container_name: ulms-finance-service
+    ports:
+      - "5004:3000"
+    depends_on:
+      - mongodb
+      - redis
+      - kafka
+    environment:
+      - PORT=3000
+      - MONGODB_URI=mongodb://mongodb:27017/finance_db
+      - REDIS_URI=redis://redis:6379
+      - KAFKA_BROKERS=kafka:29092
+
+  forum-service:
+    build: ../../services/forum-service
+    container_name: ulms-forum-service
+    ports:
+      - "5016:3000"
+    depends_on:
+      - mongodb
+      - redis
+      - kafka
+    environment:
+      - PORT=3000
+      - MONGODB_URI=mongodb://mongodb:27017/forum_db
+      - REDIS_URI=redis://redis:6379
+      - KAFKA_BROKERS=kafka:29092
+
+  grading-service:
+    build: ../../services/grading-service
+    container_name: ulms-grading-service
+    ports:
+      - "5007:3000"
+    depends_on:
+      - mongodb
+      - redis
+      - kafka
+    environment:
+      - PORT=3000
+      - MONGODB_URI=mongodb://mongodb:27017/grading_db
+      - REDIS_URI=redis://redis:6379
+      - KAFKA_BROKERS=kafka:29092
+
+  library-service:
+    build: ../../services/library-service
+    container_name: ulms-library-service
+    ports:
+      - "5008:3000"
+    depends_on:
+      - mongodb
+      - redis
+      - kafka
+    environment:
+      - PORT=3000
+      - MONGODB_URI=mongodb://mongodb:27017/library_db
+      - REDIS_URI=redis://redis:6379
+      - KAFKA_BROKERS=kafka:29092
+
+  notification-service:
+    build: ../../services/notification-service
+    container_name: ulms-notification-service
+    ports:
+      - "5015:3000"
+    depends_on:
+      - mongodb
+      - kafka
+    environment:
+      - PORT=3000
+      - MONGODB_URI=mongodb://mongodb:27017/notification_db
+      - KAFKA_BROKERS=kafka:29092
+      - SMTP_HOST=smtp.ethereal.email
+      - SMTP_PORT=587
+      - SMTP_SECURE=false
+      - EMAIL_FROM=noreply@ulms.edu
+      - APP_NAME=ULMS University
+
+  reporting-service:
+    build: ../../services/reporting-service
+    container_name: ulms-reporting-service
+    ports:
+      - "5019:3000"
+    depends_on:
+      - mongodb
+      - redis
+      - kafka
+    environment:
+      - PORT=3000
+      - MONGODB_URI=mongodb://mongodb:27017/reporting_db
+      - REDIS_URI=redis://redis:6379
+      - KAFKA_BROKERS=kafka:29092
+      - KAFKA_CLIENT_ID=reporting-service
+
+  search-service:
+    build: ../../services/search-service
+    container_name: ulms-search-service
+    ports:
+      - "5021:3000"
+    depends_on:
+      - mongodb
+      - redis
+      - kafka
+    environment:
+      - PORT=3000
+      - MONGODB_URI=mongodb://mongodb:27017/search_db
+      - REDIS_URI=redis://redis:6379
+      - KAFKA_BROKERS=kafka:29092
+
+  timetable-service:
+    build: ../../services/timetable-service
+    container_name: ulms-timetable-service
+    ports:
+      - "5011:3000"
+    depends_on:
+      - mongodb
+      - redis
+      - kafka
+    environment:
+      - PORT=3000
+      - MONGODB_URI=mongodb://mongodb:27017/timetable_db
+      - REDIS_URI=redis://redis:6379
+      - KAFKA_BROKERS=kafka:29092
+  # ai-rag-service:
+  #   build: ../../services/ai-rag-service
+  #   container_name: ulms-ai-rag-service
+  #   ports:
+  #     - "5024:8000"
+  #   depends_on:
+  #     - mongodb
+  #     - qdrant
+  #   environment:
+  #     - MONGO_URI=mongodb://mongodb:27017/ai_rag_db
+  #     - QDRANT_HOST=qdrant
+  #     - QDRANT_PORT=6333
+  #     - LLM_API_KEY=
 
 volumes:
   mongo-data:

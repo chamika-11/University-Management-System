@@ -13,5 +13,5 @@ const templateSchema = new mongoose.Schema({
   isActive:  { type: Boolean, default: true },
 }, { timestamps: true });
 
-templateSchema.index({ slug: 1 }, { unique: true });
+
 module.exports = mongoose.model('NotificationTemplate', templateSchema);

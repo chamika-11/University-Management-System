@@ -1,6 +1,6 @@
-﻿'use strict';
+'use strict';
 require('dotenv').config();
-const required = (k) => { const v = process.env[k]; if (!v) throw new Error(\[ENV] Missing: \\); return v; };
+const required = (k) => { const v = process.env[k]; if (!v) throw new Error(`[ENV] Missing: ${k}`); return v; };
 const optional = (k, fb = '') => process.env[k] || fb;
 module.exports = {
   NODE_ENV:      optional('NODE_ENV', 'development'),
