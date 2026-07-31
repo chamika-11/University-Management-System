@@ -1,9 +1,14 @@
 import React from 'react';
+import { RouterProvider } from 'react-router-dom';
+import { router } from './routes';
+import { ErrorBoundary } from './components/ui/ErrorBoundary';
+
 function App() {
   return (
-    <div className="flex h-screen items-center justify-center bg-slate-900 text-white">
-      <h1 className="text-3xl font-bold">ULMS - Admin Portal Portal</h1>
-    </div>
+    <ErrorBoundary>
+      <RouterProvider router={router} />
+    </ErrorBoundary>
   );
 }
+
 export default App;
