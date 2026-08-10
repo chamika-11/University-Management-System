@@ -39,7 +39,7 @@ const LoginPage = () => {
     setErrors({});
     setLoading(true);
     try {
-      await login({ email, password });
+      await login({ email: email.trim(), password });
       navigate('/dashboard', { replace: true });
     } catch (err) {
       const msg = parseError(err);

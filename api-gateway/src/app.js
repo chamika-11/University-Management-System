@@ -24,9 +24,10 @@ app.use(globalLimiter);
 app.use('/api/v1/auth/login', authLimiter);
 app.use('/api/v1/auth/register', authLimiter);
 
-// Express body parsers
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+// NOTE: express.json() is intentionally NOT added here.
+// Adding it would consume the request body stream, which breaks
+// HTTP proxy forwarding (the proxied service would receive an empty body).
+// Each downstream microservice parses its own request body.
 
 // Mounting routes
 app.use('/health', healthRoutes);
