@@ -1,8 +1,41 @@
 import React from 'react';
 import { BarChart3, TrendingUp, Download, PieChart, Users, GraduationCap } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
+import { useToast } from '@/hooks/useToast';
 
 export default function AdminReportsPage() {
+  const { showToast } = useToast();
+
+  const handleExportData = () => {
+    const reportData = {
+      title: 'Institutional Performance & Analytics Report',
+      generatedAt: new Date().toISOString(),
+      gpaDistribution: {
+        firstClass: '38%',
+        upperSecond: '44%',
+        lowerSecond: '14%',
+      },
+      enrollmentShare: {
+        cs: '42% (1240 students)',
+        se: '28% (820 students)',
+        ai: '18% (530 students)',
+        biz: '12% (350 students)',
+      },
+    };
+
+    const blob = new Blob([JSON.stringify(reportData, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `ulms_executive_report_${Date.now()}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+
+    showToast({ message: 'Executive report data exported successfully!', type: 'success' });
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
@@ -15,7 +48,7 @@ export default function AdminReportsPage() {
             Institutional Key Performance Indicators, academic pass rates, and demographic distributions.
           </p>
         </div>
-        <Button variant="primary" size="md" className="flex items-center gap-2 shadow-lg shadow-indigo-600/20">
+        <Button variant="primary" size="md" onClick={handleExportData} className="flex items-center gap-2 shadow-lg shadow-indigo-600/20">
           <Download className="w-4 h-4" /> Export Report Data
         </Button>
       </div>

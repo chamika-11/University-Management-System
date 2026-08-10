@@ -12,6 +12,7 @@ const { listUsersSchema, updateUserSchema } = require('../validators/user.valida
 router.use(authenticate);
 
 router.get('/',     requireRole('ADMIN', 'SUPER_ADMIN'), validate(listUsersSchema), userController.getAll);
+router.get('/audit-logs', requireRole('ADMIN', 'SUPER_ADMIN'),                   userController.getAuditLogs);
 router.get('/:id',  requireRole('ADMIN', 'SUPER_ADMIN', 'FACULTY'),                userController.getOne);
 router.patch('/:id', requireRole('ADMIN', 'SUPER_ADMIN'), validate(updateUserSchema), userController.update);
 router.delete('/:id', requireRole('SUPER_ADMIN'),                                  userController.delete);

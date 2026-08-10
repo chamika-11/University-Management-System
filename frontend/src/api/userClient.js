@@ -40,4 +40,7 @@ export const userClient = {
 
   deleteUser: (id) =>
     api.delete(`/api/v1/users/${id}`).then((r) => r.data),
+
+  getAuditLogs: () =>
+    api.get('/api/v1/users/audit-logs').then((r) => r.data),
 };
