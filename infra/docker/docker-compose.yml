@@ -109,7 +109,7 @@ services:
       - kafka
     environment:
       - PORT=3000
-      - MONGODB_URI=mongodb://mongodb:27017/user_db
+      - MONGODB_URI=mongodb+srv://thennakoonchamika11:P2UWnOs9zZQLbf2I@cluster0.bjcqnp6.mongodb.net/user_db?retryWrites=true&w=majority
       - REDIS_URI=redis://redis:6379
       - KAFKA_BROKERS=kafka:29092
       - JWT_SECRET=supersecretkey
@@ -125,7 +125,7 @@ services:
       - kafka
     environment:
       - PORT=3000
-      - MONGODB_URI=mongodb://mongodb:27017/academic_db
+      - MONGODB_URI=mongodb+srv://thennakoonchamika11:P2UWnOs9zZQLbf2I@cluster0.bjcqnp6.mongodb.net/academic_db?retryWrites=true&w=majority
       - REDIS_URI=redis://redis:6379
       - KAFKA_BROKERS=kafka:29092
 
@@ -140,7 +140,7 @@ services:
       - kafka
     environment:
       - PORT=3000
-      - MONGODB_URI=mongodb://mongodb:27017/admission_db
+      - MONGODB_URI=mongodb+srv://thennakoonchamika11:P2UWnOs9zZQLbf2I@cluster0.bjcqnp6.mongodb.net/admission_db?retryWrites=true&w=majority
       - REDIS_URI=redis://redis:6379
       - KAFKA_BROKERS=kafka:29092
 
@@ -155,7 +155,7 @@ services:
       - kafka
     environment:
       - PORT=3000
-      - MONGODB_URI=mongodb://mongodb:27017/assessment_db
+      - MONGODB_URI=mongodb+srv://thennakoonchamika11:P2UWnOs9zZQLbf2I@cluster0.bjcqnp6.mongodb.net/assessment_db?retryWrites=true&w=majority
       - REDIS_URI=redis://redis:6379
       - KAFKA_BROKERS=kafka:29092
 
@@ -170,7 +170,7 @@ services:
       - kafka
     environment:
       - PORT=3000
-      - MONGODB_URI=mongodb://mongodb:27017/content_db
+      - MONGODB_URI=mongodb+srv://thennakoonchamika11:P2UWnOs9zZQLbf2I@cluster0.bjcqnp6.mongodb.net/content_db?retryWrites=true&w=majority
       - REDIS_URI=redis://redis:6379
       - KAFKA_BROKERS=kafka:29092
 
@@ -185,7 +185,7 @@ services:
       - kafka
     environment:
       - PORT=3000
-      - MONGODB_URI=mongodb://mongodb:27017/document_db
+      - MONGODB_URI=mongodb+srv://thennakoonchamika11:P2UWnOs9zZQLbf2I@cluster0.bjcqnp6.mongodb.net/document_db?retryWrites=true&w=majority
       - REDIS_URI=redis://redis:6379
       - KAFKA_BROKERS=kafka:29092
 
@@ -200,7 +200,7 @@ services:
       - kafka
     environment:
       - PORT=3000
-      - MONGODB_URI=mongodb://mongodb:27017/examination_db
+      - MONGODB_URI=mongodb+srv://thennakoonchamika11:P2UWnOs9zZQLbf2I@cluster0.bjcqnp6.mongodb.net/examination_db?retryWrites=true&w=majority
       - REDIS_URI=redis://redis:6379
       - KAFKA_BROKERS=kafka:29092
 
@@ -215,7 +215,7 @@ services:
       - kafka
     environment:
       - PORT=3000
-      - MONGODB_URI=mongodb://mongodb:27017/finance_db
+      - MONGODB_URI=mongodb+srv://thennakoonchamika11:P2UWnOs9zZQLbf2I@cluster0.bjcqnp6.mongodb.net/finance_db?retryWrites=true&w=majority
       - REDIS_URI=redis://redis:6379
       - KAFKA_BROKERS=kafka:29092
 
@@ -230,7 +230,7 @@ services:
       - kafka
     environment:
       - PORT=3000
-      - MONGODB_URI=mongodb://mongodb:27017/forum_db
+      - MONGODB_URI=mongodb+srv://thennakoonchamika11:P2UWnOs9zZQLbf2I@cluster0.bjcqnp6.mongodb.net/forum_db?retryWrites=true&w=majority
       - REDIS_URI=redis://redis:6379
       - KAFKA_BROKERS=kafka:29092
 
@@ -245,7 +245,7 @@ services:
       - kafka
     environment:
       - PORT=3000
-      - MONGODB_URI=mongodb://mongodb:27017/grading_db
+      - MONGODB_URI=mongodb+srv://thennakoonchamika11:P2UWnOs9zZQLbf2I@cluster0.bjcqnp6.mongodb.net/grading_db?retryWrites=true&w=majority
       - REDIS_URI=redis://redis:6379
       - KAFKA_BROKERS=kafka:29092
 
@@ -260,7 +260,7 @@ services:
       - kafka
     environment:
       - PORT=3000
-      - MONGODB_URI=mongodb://mongodb:27017/library_db
+      - MONGODB_URI=mongodb+srv://thennakoonchamika11:P2UWnOs9zZQLbf2I@cluster0.bjcqnp6.mongodb.net/library_db?retryWrites=true&w=majority
       - REDIS_URI=redis://redis:6379
       - KAFKA_BROKERS=kafka:29092
 
@@ -274,7 +274,7 @@ services:
       - kafka
     environment:
       - PORT=3000
-      - MONGODB_URI=mongodb://mongodb:27017/notification_db
+      - MONGODB_URI=mongodb+srv://thennakoonchamika11:P2UWnOs9zZQLbf2I@cluster0.bjcqnp6.mongodb.net/notification_db?retryWrites=true&w=majority
       - KAFKA_BROKERS=kafka:29092
       - SMTP_HOST=smtp.ethereal.email
       - SMTP_PORT=587
@@ -293,7 +293,7 @@ services:
       - kafka
     environment:
       - PORT=3000
-      - MONGODB_URI=mongodb://mongodb:27017/reporting_db
+      - MONGODB_URI=mongodb+srv://thennakoonchamika11:P2UWnOs9zZQLbf2I@cluster0.bjcqnp6.mongodb.net/reporting_db?retryWrites=true&w=majority
       - REDIS_URI=redis://redis:6379
       - KAFKA_BROKERS=kafka:29092
       - KAFKA_CLIENT_ID=reporting-service
@@ -309,7 +309,7 @@ services:
       - kafka
     environment:
       - PORT=3000
-      - MONGODB_URI=mongodb://mongodb:27017/search_db
+      - MONGODB_URI=mongodb+srv://thennakoonchamika11:P2UWnOs9zZQLbf2I@cluster0.bjcqnp6.mongodb.net/search_db?retryWrites=true&w=majority
       - REDIS_URI=redis://redis:6379
       - KAFKA_BROKERS=kafka:29092
 
@@ -324,7 +324,7 @@ services:
       - kafka
     environment:
       - PORT=3000
-      - MONGODB_URI=mongodb://mongodb:27017/timetable_db
+      - MONGODB_URI=mongodb+srv://thennakoonchamika11:P2UWnOs9zZQLbf2I@cluster0.bjcqnp6.mongodb.net/timetable_db?retryWrites=true&w=majority
       - REDIS_URI=redis://redis:6379
       - KAFKA_BROKERS=kafka:29092
   # ai-rag-service:
