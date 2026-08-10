@@ -1,18 +1,19 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectUser, logout } from '@/store/authSlice';
-import { toggleSidebar } from '@/store/uiSlice';
+import { toggleSidebar, toggleTheme, selectTheme } from '@/store/uiSlice';
 import { authClient } from '@/api/authClient';
 import { useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { RoleSwitcher } from './RoleSwitcher';
-import { Menu, Bell, Search, User, LogOut, Shield } from 'lucide-react';
+import { Menu, Bell, Search, User, LogOut, Shield, Sun, Moon } from 'lucide-react';
 
 export function Header() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const user = useSelector(selectUser);
+  const theme = useSelector(selectTheme);
   const [profileOpen, setProfileOpen] = useState(false);
   const profileRef = useRef(null);
 
@@ -60,6 +61,19 @@ export function Header() {
       </div>
 
       <div className="flex items-center gap-3">
+        {/* Theme Switcher Toggle */}
+        <button
+          onClick={() => dispatch(toggleTheme())}
+          className="p-2 rounded-lg text-slate-400 hover:text-slate-100 hover:bg-white/5 transition-colors relative"
+          title={`Switch to ${theme === 'dark' ? 'Light' : 'Dark'} Mode`}
+        >
+          {theme === 'dark' ? (
+            <Sun className="w-5 h-5 text-amber-400" />
+          ) : (
+            <Moon className="w-5 h-5 text-indigo-600" />
+          )}
+        </button>
+
         <RoleSwitcher />
 
         <button
