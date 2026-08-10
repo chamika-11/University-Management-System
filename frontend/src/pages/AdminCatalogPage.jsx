@@ -1,48 +1,68 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { Input, Select } from '@/components/forms/FormField';
 import { Modal } from '@/components/ui/Modal';
+import { academicClient } from '@/api/academicClient';
+import { parseError } from '@/utils/errorParser';
 import { useToast } from '@/hooks/useToast';
-import { Building, BookOpen, Plus, Search, Layers, Edit, Trash2 } from 'lucide-react';
-
-const mockCourses = [
-  { id: 'CS-101', code: 'CS101', title: 'Introduction to Computer Science', dept: 'Computer Science', credits: 4, level: 'Undergraduate', status: 'ACTIVE' },
-  { id: 'SE-302', code: 'SE302', title: 'Software Architecture & Microservices', dept: 'Software Engineering', credits: 3, level: 'Undergraduate', status: 'ACTIVE' },
-  { id: 'AI-401', code: 'AI401', title: 'Artificial Intelligence & Neural Networks', dept: 'Artificial Intelligence', credits: 4, level: 'Graduate', status: 'ACTIVE' },
-  { id: 'DS-201', code: 'DS201', title: 'Data Structures & Algorithms', dept: 'Data Science', credits: 4, level: 'Undergraduate', status: 'ACTIVE' },
-];
+import { Building, BookOpen, Plus, Search, RefreshCw } from 'lucide-react';
 
 export default function AdminCatalogPage() {
   const { showToast } = useToast();
-  const [courses, setCourses] = useState(mockCourses);
+  const [courses, setCourses] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [newCourse, setNewCourse] = useState({ code: '', title: '', dept: 'Computer Science', credits: '3', level: 'Undergraduate' });
 
-  const filtered = courses.filter((c) => c.title.toLowerCase().includes(search.toLowerCase()) || c.code.toLowerCase().includes(search.toLowerCase()));
+  const fetchCourses = async () => {
+    setLoading(true);
+    try {
+      const res = await academicClient.getCourses();
+      setCourses(res.data || res || []);
+    } catch (err) {
+      showToast({ message: parseError(err), type: 'error' });
+    } finally {
+      setLoading(false);
+    }
+  };
 
-  const handleAddCourse = (e) => {
+  useEffect(() => {
+    fetchCourses();
+  }, []);
+
+  const filtered = courses.filter((c) => {
+    const q = search.toLowerCase();
+    const title = (c.title || c.name || '').toLowerCase();
+    const code = (c.code || c.courseCode || '').toLowerCase();
+    return title.includes(q) || code.includes(q);
+  });
+
+  const handleAddCourse = async (e) => {
     e.preventDefault();
     if (!newCourse.code || !newCourse.title) {
       showToast({ message: 'Course code and title are required.', type: 'error' });
       return;
     }
 
-    const created = {
-      id: newCourse.code,
-      code: newCourse.code.toUpperCase(),
-      title: newCourse.title,
-      dept: newCourse.dept,
-      credits: parseInt(newCourse.credits, 10),
-      level: newCourse.level,
-      status: 'ACTIVE',
-    };
+    try {
+      const payload = {
+        code: newCourse.code.toUpperCase(),
+        title: newCourse.title,
+        department: newCourse.dept,
+        credits: parseInt(newCourse.credits, 10),
+        level: newCourse.level,
+      };
 
-    setCourses([created, ...courses]);
-    setIsAddModalOpen(false);
-    setNewCourse({ code: '', title: '', dept: 'Computer Science', credits: '3', level: 'Undergraduate' });
-    showToast({ message: `Course ${created.code} added to catalog!`, type: 'success' });
+      await academicClient.createCourse(payload);
+      showToast({ message: `Course ${payload.code} added to MongoDB catalog!`, type: 'success' });
+      setIsAddModalOpen(false);
+      setNewCourse({ code: '', title: '', dept: 'Computer Science', credits: '3', level: 'Undergraduate' });
+      fetchCourses();
+    } catch (err) {
+      showToast({ message: parseError(err), type: 'error' });
+    }
   };
 
   return (
@@ -54,7 +74,7 @@ export default function AdminCatalogPage() {
             Academic Catalog Governance
           </h1>
           <p className="page-subtitle text-sm text-slate-400 mt-1">
-            Manage university degree programs, department offerings, and course curriculum.
+            Manage university degree programs, department offerings, and course curriculum live from MongoDB.
           </p>
         </div>
         <Button variant="primary" size="md" onClick={() => setIsAddModalOpen(true)} className="flex items-center gap-2 shadow-lg shadow-indigo-600/20">
@@ -67,24 +87,31 @@ export default function AdminCatalogPage() {
           <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
           <Input placeholder="Search catalog..." value={search} onChange={(e) => setSearch(e.target.value)} className="pl-10 text-xs" />
         </div>
+        <Button variant="outline" size="sm" onClick={fetchCourses}>
+          <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
+        </Button>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {filtered.map((course) => (
-          <div key={course.id} className="card p-5 border border-white/10 hover:border-indigo-500/30 transition-all">
-            <div className="flex items-start justify-between">
-              <div>
-                <span className="font-mono font-bold text-indigo-400 text-sm px-2 py-0.5 rounded bg-indigo-500/10 border border-indigo-500/20">
-                  {course.code}
-                </span>
-                <h3 className="text-lg font-semibold text-slate-100 mt-2">{course.title}</h3>
-                <p className="text-xs text-slate-400 mt-1">{course.dept} • {course.credits} Credits • {course.level}</p>
+      {loading ? (
+        <div className="text-center py-12 text-slate-400 text-sm">Loading course catalog from MongoDB...</div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {filtered.map((course) => (
+            <div key={course._id || course.id} className="card p-5 border border-white/10 hover:border-indigo-500/30 transition-all">
+              <div className="flex items-start justify-between">
+                <div>
+                  <span className="font-mono font-bold text-indigo-400 text-sm px-2 py-0.5 rounded bg-indigo-500/10 border border-indigo-500/20">
+                    {course.code || course.courseCode || 'COURSE'}
+                  </span>
+                  <h3 className="text-lg font-semibold text-slate-100 mt-2">{course.title || course.name}</h3>
+                  <p className="text-xs text-slate-400 mt-1">{course.department || course.dept || 'Computer Science'} • {course.credits || 3} Credits • {course.level || 'Undergraduate'}</p>
+                </div>
+                <Badge variant="emerald">{course.status || 'ACTIVE'}</Badge>
               </div>
-              <Badge variant="emerald">{course.status}</Badge>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
 
       {/* Add Course Modal */}
       <Modal isOpen={isAddModalOpen} onClose={() => setIsAddModalOpen(false)} title="Add New Course to Catalog">
@@ -107,7 +134,7 @@ export default function AdminCatalogPage() {
 
           <div className="flex items-center justify-end gap-2 pt-4 border-t border-white/5">
             <Button type="button" variant="outline" onClick={() => setIsAddModalOpen(false)}>Cancel</Button>
-            <Button type="submit" variant="primary">Add Course</Button>
+            <Button type="submit" variant="primary">Add Course to DB</Button>
           </div>
         </form>
       </Modal>

@@ -21,4 +21,13 @@ export const academicClient = {
 
   getCurrentSemester: () =>
     api.get('/api/v1/academics/semesters/current').then((r) => r.data),
+
+  getSemesters: () =>
+    api.get('/api/v1/academics/semesters').then((r) => r.data),
+
+  getSections: (params = {}) =>
+    api.get('/api/v1/academics/sections', { params }).then((r) => r.data),
+
+  createCourse: (payload) =>
+    api.post('/api/v1/academics/courses', payload).then((r) => r.data),
 };

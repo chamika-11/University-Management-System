@@ -12,4 +12,7 @@ export const financeClient = {
 
   processPayment: (payload) =>
     api.post('/api/v1/finance/payments/charge', payload).then((r) => r.data),
+
+  getAllInvoices: (params = {}) =>
+    api.get('/api/v1/finance/invoices', { params }).then((r) => r.data),
 };
