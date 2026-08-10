@@ -33,6 +33,7 @@ const NotificationsPage     = lazy(() => import('@/pages/NotificationsPage'));
 const AiAssistantPage       = lazy(() => import('@/pages/AiAssistantPage'));
 const CertificatesPage      = lazy(() => import('@/pages/CertificatesPage'));
 const SearchPage            = lazy(() => import('@/pages/SearchPage'));
+const AdminUsersPage        = lazy(() => import('@/pages/AdminUsersPage'));
 
 // Lazy Wrapper Helper
 const LazyComp = (Component) => (
@@ -90,10 +91,7 @@ export const router = createBrowserRouter([
         path: '/admin/users',
         element: (
           <PermissionGuard requirePermission="users:read">
-            <div className="card space-y-2">
-              <h1 className="page-title">User Account Management</h1>
-              <p className="page-subtitle">Admin module for managing user accounts, locking/unlocking, and profile assignment.</p>
-            </div>
+            {LazyComp(AdminUsersPage)}
           </PermissionGuard>
         ),
       },
