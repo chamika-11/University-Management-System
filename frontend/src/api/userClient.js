@@ -21,4 +21,26 @@ export const userClient = {
 
   addEmergencyContact: (payload) =>
     api.post('/api/v1/users/emergency-contacts', payload).then((r) => r.data),
+
+  // Admin Management Endpoints
+  getUsers: (params) =>
+    api.get('/api/v1/users', { params }).then((r) => r.data),
+
+  createUser: (payload) =>
+    api.post('/api/v1/auth/register', payload).then((r) => r.data),
+
+  lockUser: (id, durationMinutes = 60) =>
+    api.post(`/api/v1/users/${id}/lock`, { durationMinutes }).then((r) => r.data),
+
+  unlockUser: (id) =>
+    api.post(`/api/v1/users/${id}/unlock`).then((r) => r.data),
+
+  updateUserStatus: (id, status) =>
+    api.patch(`/api/v1/users/${id}`, { status }).then((r) => r.data),
+
+  deleteUser: (id) =>
+    api.delete(`/api/v1/users/${id}`).then((r) => r.data),
+
+  getAuditLogs: () =>
+    api.get('/api/v1/users/audit-logs').then((r) => r.data),
 };

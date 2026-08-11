@@ -21,7 +21,7 @@ exports.loginSchema = z.object({
   body: z.object({
     email: z.string().email().toLowerCase(),
     password: z.string().min(1, 'Password is required'),
-    mfaToken: z.string().optional(),
+    mfaToken: z.string().nullable().optional(),
   }),
 });
 

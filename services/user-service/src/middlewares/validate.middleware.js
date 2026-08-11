@@ -29,6 +29,7 @@ const validate = (schema) => (req, res, next) => {
         message: e.message,
         code: e.code,
       }));
+      console.error('[Validation Error]', JSON.stringify({ path: req.originalUrl, errors, body: req.body }));
       return res.status(422).json({
         success: false,
         code: 'VALIDATION_ERROR',

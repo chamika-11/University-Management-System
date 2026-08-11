@@ -36,7 +36,6 @@ export function Sidebar() {
   const getNavItems = () => {
     switch (activeRole) {
       case 'ADMIN':
-      case 'SUPER_ADMIN':
         return [
           { label: 'Admin Dashboard', path: '/dashboard', icon: LayoutDashboard },
           { label: 'User Management', path: '/admin/users', icon: Users, permission: 'users:read' },

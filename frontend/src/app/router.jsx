@@ -11,7 +11,7 @@ import { FullPageSpinner } from '@/components/ui/Spinner';
 const LoginPage             = lazy(() => import('@/features/auth/LoginPage'));
 const DashboardPage         = lazy(() => import('@/features/dashboard/DashboardPage'));
 
-// Lazy-loaded Domain Pages
+// Lazy-loaded Student Pages
 const ProfilePage           = lazy(() => import('@/pages/ProfilePage'));
 const AdmissionStatusPage   = lazy(() => import('@/pages/AdmissionStatusPage'));
 const CourseCatalogPage     = lazy(() => import('@/pages/CourseCatalogPage'));
@@ -33,6 +33,25 @@ const NotificationsPage     = lazy(() => import('@/pages/NotificationsPage'));
 const AiAssistantPage       = lazy(() => import('@/pages/AiAssistantPage'));
 const CertificatesPage      = lazy(() => import('@/pages/CertificatesPage'));
 const SearchPage            = lazy(() => import('@/pages/SearchPage'));
+
+// Lazy-loaded Admin Pages
+const AdminUsersPage        = lazy(() => import('@/pages/AdminUsersPage'));
+const AdminRolesPage        = lazy(() => import('@/pages/AdminRolesPage'));
+const AdminAdmissionsPage   = lazy(() => import('@/pages/AdminAdmissionsPage'));
+const AdminCatalogPage      = lazy(() => import('@/pages/AdminCatalogPage'));
+const AdminSemestersPage    = lazy(() => import('@/pages/AdminSemestersPage'));
+const AdminTimetablePage    = lazy(() => import('@/pages/AdminTimetablePage'));
+const AdminFinancePage      = lazy(() => import('@/pages/AdminFinancePage'));
+const AdminReportsPage      = lazy(() => import('@/pages/AdminReportsPage'));
+const AdminAuditPage        = lazy(() => import('@/pages/AdminAuditPage'));
+const AdminNotificationsPage= lazy(() => import('@/pages/AdminNotificationsPage'));
+
+// Lazy-loaded Faculty Pages
+const FacultySectionsPage   = lazy(() => import('@/pages/FacultySectionsPage'));
+const FacultyGradebookPage  = lazy(() => import('@/pages/FacultyGradebookPage'));
+const FacultyAttendancePage = lazy(() => import('@/pages/FacultyAttendancePage'));
+const FacultyContentPage    = lazy(() => import('@/pages/FacultyContentPage'));
+const FacultyTimetablePage  = lazy(() => import('@/pages/FacultyTimetablePage'));
 
 // Lazy Wrapper Helper
 const LazyComp = (Component) => (
@@ -86,74 +105,23 @@ export const router = createBrowserRouter([
       { path: '/search',            element: LazyComp(SearchPage) },
 
       // Admin RBAC Protected Modules
-      {
-        path: '/admin/users',
-        element: (
-          <PermissionGuard requirePermission="users:read">
-            <div className="card space-y-2">
-              <h1 className="page-title">User Account Management</h1>
-              <p className="page-subtitle">Admin module for managing user accounts, locking/unlocking, and profile assignment.</p>
-            </div>
-          </PermissionGuard>
-        ),
-      },
-      {
-        path: '/admin/roles',
-        element: (
-          <PermissionGuard requirePermission="roles:manage">
-            <div className="card space-y-2">
-              <h1 className="page-title">RBAC Roles & Permission Matrix</h1>
-              <p className="page-subtitle">Configure system roles and permission string assignments.</p>
-            </div>
-          </PermissionGuard>
-        ),
-      },
-      {
-        path: '/admin/reports',
-        element: (
-          <PermissionGuard requirePermission="reports:generate">
-            <div className="card space-y-2">
-              <h1 className="page-title">Academic & Financial Reports</h1>
-              <p className="page-subtitle">Generate institution report summaries and KPI exports.</p>
-            </div>
-          </PermissionGuard>
-        ),
-      },
-      {
-        path: '/admin/audit',
-        element: (
-          <PermissionGuard requirePermission="audit:read">
-            <div className="card space-y-2">
-              <h1 className="page-title">Security & System Audit Trail</h1>
-              <p className="page-subtitle">Inspect authentication events, security logs, and access history.</p>
-            </div>
-          </PermissionGuard>
-        ),
-      },
+      { path: '/admin/users',         element: <PermissionGuard requirePermission="users:read">{LazyComp(AdminUsersPage)}</PermissionGuard> },
+      { path: '/admin/roles',         element: <PermissionGuard requirePermission="roles:manage">{LazyComp(AdminRolesPage)}</PermissionGuard> },
+      { path: '/admin/admissions',    element: <PermissionGuard requirePermission="admissions:evaluate">{LazyComp(AdminAdmissionsPage)}</PermissionGuard> },
+      { path: '/admin/catalog',       element: <PermissionGuard requirePermission="catalog:manage">{LazyComp(AdminCatalogPage)}</PermissionGuard> },
+      { path: '/admin/semesters',     element: <PermissionGuard requirePermission="semesters:manage">{LazyComp(AdminSemestersPage)}</PermissionGuard> },
+      { path: '/admin/timetable',     element: LazyComp(AdminTimetablePage) },
+      { path: '/admin/finance',       element: <PermissionGuard requirePermission="finance:oversight">{LazyComp(AdminFinancePage)}</PermissionGuard> },
+      { path: '/admin/reports',       element: <PermissionGuard requirePermission="reports:generate">{LazyComp(AdminReportsPage)}</PermissionGuard> },
+      { path: '/admin/audit',         element: <PermissionGuard requirePermission="audit:read">{LazyComp(AdminAuditPage)}</PermissionGuard> },
+      { path: '/admin/notifications', element: <PermissionGuard requirePermission="notifications:admin">{LazyComp(AdminNotificationsPage)}</PermissionGuard> },
 
       // Faculty RBAC Protected Modules
-      {
-        path: '/faculty/sections',
-        element: (
-          <PermissionGuard requirePermission="sections:manage">
-            <div className="card space-y-2">
-              <h1 className="page-title">Assigned Teaching Sections</h1>
-              <p className="page-subtitle">View assigned course sections, student rosters, and enrollment details.</p>
-            </div>
-          </PermissionGuard>
-        ),
-      },
-      {
-        path: '/faculty/gradebook',
-        element: (
-          <PermissionGuard requirePermission="grades:write">
-            <div className="card space-y-2">
-              <h1 className="page-title">Section Gradebook & Marking</h1>
-              <p className="page-subtitle">Enter assignment grades, score assessments, and submit final marks.</p>
-            </div>
-          </PermissionGuard>
-        ),
-      },
+      { path: '/faculty/sections',   element: <PermissionGuard requirePermission="sections:manage">{LazyComp(FacultySectionsPage)}</PermissionGuard> },
+      { path: '/faculty/content',    element: <PermissionGuard requirePermission="content:author">{LazyComp(FacultyContentPage)}</PermissionGuard> },
+      { path: '/faculty/gradebook',  element: <PermissionGuard requirePermission="grades:write">{LazyComp(FacultyGradebookPage)}</PermissionGuard> },
+      { path: '/faculty/attendance', element: <PermissionGuard requirePermission="attendance:mark">{LazyComp(FacultyAttendancePage)}</PermissionGuard> },
+      { path: '/faculty/timetable',  element: LazyComp(FacultyTimetablePage) },
 
       // 403 Forbidden Route
       { path: '/403', element: <ForbiddenPage /> },

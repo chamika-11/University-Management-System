@@ -26,6 +26,55 @@ body {
   color: #f1f5f9;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background-color 200ms ease, color 200ms ease;
+}
+
+/* ── Light Mode Override ────────────────────────────────────────── */
+html.light body {
+  background-color: #f8fafc;
+  color: #0f172a;
+}
+
+html.light .bg-slate-950 {
+  background-color: #f1f5f9 !important;
+}
+
+html.light .bg-slate-900 {
+  background-color: #ffffff !important;
+  border-color: #e2e8f0 !important;
+}
+
+html.light .bg-slate-900\/80 {
+  background-color: rgba(255, 255, 255, 0.85) !important;
+}
+
+html.light .bg-slate-900\/95 {
+  background-color: rgba(255, 255, 255, 0.95) !important;
+}
+
+html.light .text-slate-100 {
+  color: #0f172a !important;
+}
+
+html.light .text-slate-200 {
+  color: #1e293b !important;
+}
+
+html.light .text-slate-300 {
+  color: #334155 !important;
+}
+
+html.light .text-slate-400 {
+  color: #64748b !important;
+}
+
+html.light .text-slate-500 {
+  color: #64748b !important;
+}
+
+html.light .border-white\/5,
+html.light .border-white\/10 {
+  border-color: #e2e8f0 !important;
 }
 
 /* ── Custom Scrollbar ──────────────────────────────────────────── */
@@ -33,6 +82,9 @@ body {
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: #475569; }
+
+html.light ::-webkit-scrollbar-thumb { background: #cbd5e1; }
+html.light ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
 
 /* ── Focus Ring ────────────────────────────────────────────────── */
 :focus-visible {
@@ -50,16 +102,38 @@ body {
   border-radius: 12px;
 }
 
+html.light .glass-card {
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+}
+
 /* ── Sidebar Link Styling ──────────────────────────────────────── */
 .sidebar-link {
   @apply flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400
          text-sm font-medium transition-all duration-150
-         hover:bg-white/5 hover:text-slate-100;
+         hover:bg-slate-800 hover:text-slate-100;
 }
+
+html.light .sidebar-link {
+  color: #64748b;
+}
+
+html.light .sidebar-link:hover {
+  background-color: #f1f5f9;
+  color: #0f172a;
+}
+
 .sidebar-link.active {
   @apply bg-indigo-500/15 text-indigo-400 ring-1 ring-indigo-500/30;
 }
+
+html.light .sidebar-link.active {
+  background-color: #e0e7ff;
+  color: #4338ca;
+}
+
 .sidebar-link.active svg { @apply text-indigo-400; }
+html.light .sidebar-link.active svg { color: #4338ca; }
 
 /* ── Badges ────────────────────────────────────────────────────── */
 .badge-emerald { @apply bg-emerald-500/15 text-emerald-400 ring-1 ring-emerald-500/30; }
@@ -69,6 +143,13 @@ body {
 .badge-slate   { @apply bg-slate-500/15  text-slate-400  ring-1 ring-slate-500/30;  }
 .badge-sky     { @apply bg-sky-500/15    text-sky-400    ring-1 ring-sky-500/30;    }
 
+html.light .badge-emerald { @apply bg-emerald-100 text-emerald-800 ring-1 ring-emerald-300; }
+html.light .badge-amber   { @apply bg-amber-100   text-amber-800   ring-1 ring-amber-300;   }
+html.light .badge-rose    { @apply bg-rose-100    text-rose-800    ring-1 ring-rose-300;    }
+html.light .badge-indigo  { @apply bg-indigo-100  text-indigo-800  ring-1 ring-indigo-300;  }
+html.light .badge-slate   { @apply bg-slate-200   text-slate-700   ring-1 ring-slate-300;   }
+html.light .badge-sky     { @apply bg-sky-100     text-sky-800     ring-1 ring-sky-300;     }
+
 /* ── Card Utility ──────────────────────────────────────────────── */
 .card {
   @apply bg-slate-900 border border-white/5 rounded-xl p-5;
@@ -77,9 +158,23 @@ body {
   @apply bg-slate-900 border border-white/5 rounded-lg p-4;
 }
 
+html.light .card,
+html.light .card-sm {
+  background-color: #ffffff;
+  border-color: #e2e8f0;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+}
+
 .page-title {
   @apply text-xl font-semibold text-slate-100 tracking-tight;
 }
 .page-subtitle {
   @apply text-sm text-slate-500 mt-0.5;
+}
+
+html.light .page-title {
+  color: #0f172a;
+}
+html.light .page-subtitle {
+  color: #64748b;
 }
