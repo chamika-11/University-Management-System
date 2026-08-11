@@ -3,7 +3,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
-const MONGO_URI = process.env.MONGODB_URI || 'mongodb+srv://thennakoonchamika11:P2UWnOs9zZQLbf2I@cluster0.bjcqnp6.mongodb.net/user_db?retryWrites=true&w=majority';
+const MONGO_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/user_db';
 
 async function seedAdmin() {
   try {

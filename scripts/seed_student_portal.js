@@ -10,7 +10,7 @@ try {
   bcrypt = require(path.resolve(__dirname, '../services/user-service/node_modules/bcryptjs'));
 }
 
-const MONGO_BASE_URI = process.env.MONGO_BASE_URI || 'mongodb+srv://thennakoonchamika11:P2UWnOs9zZQLbf2I@cluster0.bjcqnp6.mongodb.net';
+const MONGO_BASE_URI = process.env.MONGO_BASE_URI || 'mongodb://localhost:27017';
 
 // Helper to get or create connection to a database
 const connections = {};
