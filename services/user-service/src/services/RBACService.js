@@ -53,11 +53,11 @@ class RBACService {
 
   // Seed default roles and permissions for a fresh installation
   async seedDefaults() {
-    const defaultRoles = ['STUDENT', 'FACULTY', 'ADMIN', 'STAFF', 'SUPER_ADMIN'];
+    const defaultRoles = ['STUDENT', 'FACULTY', 'ADMIN', 'STAFF'];
     for (const name of defaultRoles) {
       const exists = await roleRepo.findByName(name);
       if (!exists) {
-        await roleRepo.create({ name, description: `Default ${name} role`, isSystem: true, isDefault: name !== 'SUPER_ADMIN' });
+        await roleRepo.create({ name, description: `Default ${name} role`, isSystem: true, isDefault: false });
       }
     }
   }

@@ -15,7 +15,7 @@ router.get('/',     requireRole('ADMIN', 'SUPER_ADMIN'), validate(listUsersSchem
 router.get('/audit-logs', requireRole('ADMIN', 'SUPER_ADMIN'),                   userController.getAuditLogs);
 router.get('/:id',  requireRole('ADMIN', 'SUPER_ADMIN', 'FACULTY'),                userController.getOne);
 router.patch('/:id', requireRole('ADMIN', 'SUPER_ADMIN'), validate(updateUserSchema), userController.update);
-router.delete('/:id', requireRole('SUPER_ADMIN'),                                  userController.delete);
+router.delete('/:id', requireRole('ADMIN', 'SUPER_ADMIN'),                            userController.delete);
 router.post('/:id/lock',   requireRole('ADMIN', 'SUPER_ADMIN'),                   userController.lock);
 router.post('/:id/unlock', requireRole('ADMIN', 'SUPER_ADMIN'),                   userController.unlock);
 

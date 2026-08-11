@@ -53,7 +53,7 @@ export default function AdminRolesPage() {
       <div className="card p-4 bg-slate-900/80 border border-white/5 space-y-4">
         <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
           <div className="flex items-center gap-2 w-full md:w-auto overflow-x-auto pb-2 md:pb-0">
-            {['SUPER_ADMIN', 'ADMIN', 'FACULTY', 'STAFF', 'STUDENT'].map((role) => (
+            {['ADMIN', 'FACULTY', 'STAFF', 'STUDENT'].map((role) => (
               <button
                 key={role}
                 onClick={() => setSelectedRole(role)}
