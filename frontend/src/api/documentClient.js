@@ -1,9 +1,9 @@
-import api from '@/api/axiosInstance';
+import { axiosInstance } from './axiosInstance';
 
 export const documentClient = {
-  downloadFile: (id) =>
-    api.get(`/api/v1/documents/files/${id}`, { responseType: 'blob' }).then((r) => r.data),
-
-  getMyCertificates: () =>
-    api.get('/api/v1/documents/certificates').then((r) => r.data),
+  upload: (payload) => axiosInstance.post('/api/v1/documents/upload', payload),
+  issueCertificate: (payload) => axiosInstance.post('/api/v1/documents/certificates/issue', payload),
+  certificatesByStudent: (studentId) => axiosInstance.get(`/api/v1/documents/certificates/student/${studentId}`),
+  fileById: (id) => axiosInstance.get(`/api/v1/documents/files/${id}`),
+  deleteFile: (id) => axiosInstance.delete(`/api/v1/documents/files/${id}`),
 };

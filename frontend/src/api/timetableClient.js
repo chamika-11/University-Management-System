@@ -1,12 +1,9 @@
-import api from '@/api/axiosInstance';
+import { axiosInstance } from './axiosInstance';
 
 export const timetableClient = {
-  getSchedule: (sectionId) =>
-    api.get(`/api/v1/timetable/schedules/section/${sectionId}`).then((r) => r.data),
-
-  getMyAttendance: () =>
-    api.get('/api/v1/attendance/me').then((r) => r.data),
-
-  getCalendar: (params = {}) =>
-    api.get('/api/v1/calendar/', { params }).then((r) => r.data),
+  schedules: (semesterId) => axiosInstance.get(`/api/v1/timetable/schedules/semester/${semesterId}`),
+  timeslots: () => axiosInstance.get('/api/v1/timetable/timeslots'),
+  classrooms: () => axiosInstance.get('/api/v1/timetable/classrooms'),
+  holidays: () => axiosInstance.get('/api/v1/timetable/holidays'),
+  cancelClass: (id, payload) => axiosInstance.post(`/api/v1/timetable/schedules/${id}/cancel`, payload),
 };

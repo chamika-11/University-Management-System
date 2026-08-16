@@ -1,12 +1,8 @@
-import api from '@/api/axiosInstance';
+import { axiosInstance } from './axiosInstance';
 
 export const notificationClient = {
-  getMyNotifications: (params = {}) =>
-    api.get('/api/v1/notifications/', { params }).then((r) => r.data),
-
-  getPreferences: () =>
-    api.get('/api/v1/notifications/preferences').then((r) => r.data),
-
-  updatePreferences: (payload) =>
-    api.put('/api/v1/notifications/preferences', payload).then((r) => r.data),
+  templates: () => axiosInstance.get('/api/v1/notifications/templates'),
+  createTemplate: (payload) => axiosInstance.post('/api/v1/notifications/templates', payload),
+  updateTemplate: (id, payload) => axiosInstance.patch(`/api/v1/notifications/templates/${id}`, payload),
+  send: (payload) => axiosInstance.post('/api/v1/notifications/send', payload),
 };

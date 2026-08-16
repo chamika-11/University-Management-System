@@ -1,29 +1,36 @@
 import React from 'react';
 
-export function Table({ children, className = '' }) {
+export function Table({ columns, rows, emptyMessage = 'No records found.' }) {
   return (
-    <div className="w-full overflow-x-auto rounded-xl border border-white/5 bg-slate-900/60 backdrop-blur-md">
-      <table className={`data-table ${className}`}>{children}</table>
+    <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-white">
+      <table className="min-w-full divide-y divide-[var(--border)] text-sm">
+        <thead className="bg-[var(--surface-soft)] text-left text-[11px] uppercase tracking-[0.2em] text-[var(--text-muted)]">
+          <tr>
+            {columns.map((column) => (
+              <th key={column.key} className="px-4 py-3 font-semibold">{column.label}</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody className="divide-y divide-[var(--border)]">
+          {rows.length === 0 ? (
+            <tr>
+              <td className="px-4 py-10 text-center text-[var(--text-muted)]" colSpan={columns.length}>
+                {emptyMessage}
+              </td>
+            </tr>
+          ) : (
+            rows.map((row) => (
+              <tr key={row.id} className="hover:bg-[var(--surface-soft)]/60">
+                {columns.map((column) => (
+                  <td key={column.key} className="px-4 py-3 text-[var(--text)]">
+                    {column.render ? column.render(row) : row[column.key]}
+                  </td>
+                ))}
+              </tr>
+            ))
+          )}
+        </tbody>
+      </table>
     </div>
   );
-}
-
-export function Thead({ children }) {
-  return <thead className="border-b border-white/5 bg-slate-900/80">{children}</thead>;
-}
-
-export function Tbody({ children }) {
-  return <tbody className="divide-y divide-white/5">{children}</tbody>;
-}
-
-export function Th({ children, className = '' }) {
-  return <th className={`px-4 py-3.5 text-xs font-semibold text-slate-400 uppercase tracking-wider text-left ${className}`}>{children}</th>;
-}
-
-export function Td({ children, className = '' }) {
-  return <td className={`px-4 py-3.5 text-sm text-slate-300 ${className}`}>{children}</td>;
-}
-
-export function Tr({ children, className = '' }) {
-  return <tr className={`hover:bg-white/[0.02] transition-colors ${className}`}>{children}</tr>;
 }

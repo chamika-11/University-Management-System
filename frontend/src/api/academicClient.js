@@ -1,33 +1,11 @@
-import api from '@/api/axiosInstance';
+import { axiosInstance } from './axiosInstance';
 
 export const academicClient = {
-  getCourses: (params = {}) =>
-    api.get('/api/v1/academics/courses', { params }).then((r) => r.data),
-
-  getCourse: (id) =>
-    api.get(`/api/v1/academics/courses/${id}`).then((r) => r.data),
-
-  getSyllabus: (courseId) =>
-    api.get(`/api/v1/academics/courses/${courseId}/syllabus`).then((r) => r.data),
-
-  getPrerequisites: (courseId) =>
-    api.get(`/api/v1/academics/courses/${courseId}/prerequisites`).then((r) => r.data),
-
-  getDepartments: () =>
-    api.get('/api/v1/academics/departments').then((r) => r.data),
-
-  getPrograms: () =>
-    api.get('/api/v1/academics/programs').then((r) => r.data),
-
-  getCurrentSemester: () =>
-    api.get('/api/v1/academics/semesters/current').then((r) => r.data),
-
-  getSemesters: () =>
-    api.get('/api/v1/academics/semesters').then((r) => r.data),
-
-  getSections: (params = {}) =>
-    api.get('/api/v1/academics/sections', { params }).then((r) => r.data),
-
-  createCourse: (payload) =>
-    api.post('/api/v1/academics/courses', payload).then((r) => r.data),
+  colleges: () => axiosInstance.get('/api/v1/academics/colleges'),
+  departments: () => axiosInstance.get('/api/v1/academics/departments'),
+  programs: () => axiosInstance.get('/api/v1/academics/programs'),
+  courses: (params) => axiosInstance.get('/api/v1/academics/courses', { params }),
+  courseSyllabus: (id) => axiosInstance.get(`/api/v1/academics/courses/${id}/syllabus`),
+  semesters: () => axiosInstance.get('/api/v1/academics/semesters'),
+  sections: (semesterId) => axiosInstance.get(`/api/v1/academics/semesters/${semesterId}/sections`),
 };

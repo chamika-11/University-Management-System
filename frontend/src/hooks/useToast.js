@@ -1,15 +1,13 @@
 import { useDispatch } from 'react-redux';
-import { showToast as showToastAction, clearToast } from '@/store/uiSlice';
+import { clearGlobalBanner, setGlobalBanner } from '../app/store';
 
 export function useToast() {
   const dispatch = useDispatch();
 
-  const showToast = (toastData) => {
-    dispatch(showToastAction(toastData));
+  const showToast = (payload) => {
+    dispatch(setGlobalBanner(payload));
+    window.setTimeout(() => dispatch(clearGlobalBanner()), 2500);
   };
 
-  return {
-    showToast,
-    clearToast: () => dispatch(clearToast()),
-  };
+  return { showToast };
 }

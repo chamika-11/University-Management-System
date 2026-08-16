@@ -1,6 +1,5 @@
-import api from '@/api/axiosInstance';
+import { axiosInstance } from './axiosInstance';
 
 export const bffClient = {
-  getStudentDashboard: () =>
-    api.get('/api/v1/bff/student/dashboard').then((r) => r.data),
+  adminDashboard: () => axiosInstance.get('/api/v1/bff/admin/dashboard'),
 };
