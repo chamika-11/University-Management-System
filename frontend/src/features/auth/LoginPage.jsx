@@ -142,7 +142,75 @@ export function LoginPage() {
         </Button>
       </form>
 
-      <div className="mt-8 pt-6 border-t border-white/5 text-center text-xs text-slate-500">
+      {/* Demo Credentials Quick-Fill */}
+      <div className="mt-6 pt-5 border-t border-white/5">
+        <p className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider mb-2.5 text-center">
+          Quick Sign-In (Password: <span className="text-indigo-400 font-mono">Password123</span>)
+        </p>
+        <div className="grid grid-cols-2 gap-2">
+          <button
+            type="button"
+            onClick={() => {
+              setEmail('admin@ulms.edu');
+              setPassword('Password123');
+              setError(null);
+            }}
+            className="flex items-center justify-between px-3 py-2 bg-slate-950/60 hover:bg-slate-800/80 border border-white/10 hover:border-indigo-500/50 rounded-lg text-left transition-all group"
+          >
+            <div>
+              <span className="block text-xs font-medium text-slate-200 group-hover:text-indigo-300">👑 Admin</span>
+              <span className="block text-[10px] text-slate-500 font-mono">admin@ulms.edu</span>
+            </div>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => {
+              setEmail('student@ulms.edu');
+              setPassword('Password123');
+              setError(null);
+            }}
+            className="flex items-center justify-between px-3 py-2 bg-slate-950/60 hover:bg-slate-800/80 border border-white/10 hover:border-emerald-500/50 rounded-lg text-left transition-all group"
+          >
+            <div>
+              <span className="block text-xs font-medium text-slate-200 group-hover:text-emerald-300">🎓 Student</span>
+              <span className="block text-[10px] text-slate-500 font-mono">student@ulms.edu</span>
+            </div>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => {
+              setEmail('faculty@ulms.edu');
+              setPassword('Password123');
+              setError(null);
+            }}
+            className="flex items-center justify-between px-3 py-2 bg-slate-950/60 hover:bg-slate-800/80 border border-white/10 hover:border-cyan-500/50 rounded-lg text-left transition-all group"
+          >
+            <div>
+              <span className="block text-xs font-medium text-slate-200 group-hover:text-cyan-300">👨‍🏫 Faculty</span>
+              <span className="block text-[10px] text-slate-500 font-mono">faculty@ulms.edu</span>
+            </div>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => {
+              setEmail('staff@ulms.edu');
+              setPassword('Password123');
+              setError(null);
+            }}
+            className="flex items-center justify-between px-3 py-2 bg-slate-950/60 hover:bg-slate-800/80 border border-white/10 hover:border-amber-500/50 rounded-lg text-left transition-all group"
+          >
+            <div>
+              <span className="block text-xs font-medium text-slate-200 group-hover:text-amber-300">💼 Staff</span>
+              <span className="block text-[10px] text-slate-500 font-mono">staff@ulms.edu</span>
+            </div>
+          </button>
+        </div>
+      </div>
+
+      <div className="mt-6 text-center text-xs text-slate-500">
         Protected by API Gateway RBAC & httpOnly Cookie Auth.
       </div>
     </AuthLayout>

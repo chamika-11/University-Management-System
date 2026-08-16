@@ -39,7 +39,7 @@ async function seedAdmin() {
     }
 
     const email = 'superadmin@ulms.edu';
-    const password = 'SuperAdmin123!';
+    const password = 'Password123';
     const passwordHash = await bcrypt.hash(password, 10);
 
     let user = await User.findOne({ email });

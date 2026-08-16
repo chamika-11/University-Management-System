@@ -26,7 +26,7 @@ function getDbConnection(dbName) {
 async function runSeed() {
   console.log('🚀 Starting Comprehensive ULMS Database Seeding...');
 
-  const passwordHash = await bcrypt.hash('Password123!', 10);
+  const passwordHash = await bcrypt.hash('Password123', 10);
 
   // ------------------------------------------------------------------
   // 1. USER DB (user_db)
@@ -165,7 +165,26 @@ async function runSeed() {
     phone: '+1 (555) 019-9988'
   });
 
-  // 5 Staff Accounts
+  // Primary Staff Account
+  const primaryStaffUser = await User.create({
+    email: 'staff@ulms.edu',
+    passwordHash,
+    roleId: staffRole._id,
+    profileType: 'STAFF',
+    status: 'ACTIVE',
+    isEmailVerified: true
+  });
+  await StaffProfile.create({
+    userId: primaryStaffUser._id,
+    staffId: 'STF-2026-0000',
+    employeeId: 'EMP-2026-0000',
+    firstName: 'Staff',
+    lastName: 'Coordinator',
+    department: 'Student Affairs & Registry',
+    designation: 'Staff Officer'
+  });
+
+  // 5 Additional Staff Accounts
   for (let i = 1; i <= 5; i++) {
     const sUser = await User.create({
       email: `staff${i}@ulms.edu`,
@@ -226,6 +245,27 @@ async function runSeed() {
     studentProfiles.push(sp);
   }
 
+  // Primary Faculty Account
+  const primaryFacultyUser = await User.create({
+    email: 'faculty@ulms.edu',
+    passwordHash,
+    roleId: facultyRole._id,
+    profileType: 'FACULTY',
+    status: 'ACTIVE',
+    isEmailVerified: true
+  });
+  const primaryFacultyProfile = await FacultyProfile.create({
+    userId: primaryFacultyUser._id,
+    employeeId: 'FAC-2026-0001',
+    firstName: 'Robert',
+    lastName: 'Smith',
+    designation: 'Professor',
+    phone: '+1 (555) 020-4001',
+    office: 'Engineering Bldg Room 101',
+    officeHours: 'Mon/Wed 14:00 - 16:00',
+    bio: 'Lead Faculty & Professor in Computer Science with over 15 years of teaching experience.'
+  });
+
   // 10 Faculty Members
   const facultyNames = [
     { first: 'Robert', last: 'Smith', desig: 'Professor', dept: 'Computer Science' },
@@ -240,8 +280,8 @@ async function runSeed() {
     { first: 'Sophia', last: 'Martinez', desig: 'Assistant Professor', dept: 'Physics' }
   ];
 
-  const facultyUsers = [];
-  const facultyProfiles = [];
+  const facultyUsers = [primaryFacultyUser];
+  const facultyProfiles = [primaryFacultyProfile];
 
   for (let i = 0; i < facultyNames.length; i++) {
     const f = facultyNames[i];
@@ -268,9 +308,10 @@ async function runSeed() {
     facultyProfiles.push(fp);
   }
 
-  // 5 Admins
+  // Admins
   const adminNames = [
     { first: 'System', last: 'Administrator', email: 'admin@ulms.edu', dept: 'IT Operations' },
+    { first: 'Super', last: 'Admin', email: 'superadmin@ulms.edu', dept: 'IT Operations' },
     { first: 'Eleanor', last: 'Vance', email: 'registrar@ulms.edu', dept: 'Academic Registry' },
     { first: 'Marcus', last: 'Brody', email: 'bursar@ulms.edu', dept: 'Finance Office' },
     { first: 'Hannah', last: 'Abbott', email: 'librarian@ulms.edu', dept: 'University Library' },
