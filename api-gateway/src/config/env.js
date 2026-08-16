@@ -23,8 +23,8 @@ module.exports = {
 
   // Rate Limiting
   RATE_LIMIT_WINDOW_MS: parseInt(optional('RATE_LIMIT_WINDOW_MS', '60000'), 10),
-  RATE_LIMIT_MAX_REQUESTS: parseInt(optional('RATE_LIMIT_MAX_REQUESTS', '200'), 10),
-  AUTH_RATE_LIMIT_MAX: parseInt(optional('AUTH_RATE_LIMIT_MAX', '10'), 10),
+  RATE_LIMIT_MAX_REQUESTS: parseInt(optional('RATE_LIMIT_MAX_REQUESTS', '2000'), 10),
+  AUTH_RATE_LIMIT_MAX: parseInt(optional('AUTH_RATE_LIMIT_MAX', '500'), 10),
 
   // Circuit Breaker
   CB_TIMEOUT: parseInt(optional('CB_TIMEOUT', '5000'), 10),

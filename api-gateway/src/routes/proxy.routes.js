@@ -12,12 +12,10 @@ routesConfig.forEach((route) => {
   // Add circuit breaker middleware
   middlewares.push(withCircuitBreaker(route.serviceName));
 
-  // Add Auth verification middleware if the route is NOT public
-  if (!route.public) {
-    middlewares.push(authVerify);
-  }
+  // Add Auth verification middleware (handles token parsing for public & private routes)
+  middlewares.push(authVerify(route.public));
 
-  // Bind express-http-proxy middleware
+  // Bind proxy middleware
   router.use(route.path, ...middlewares, ProxyController.createProxy(route));
 });
 

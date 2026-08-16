@@ -19,16 +19,16 @@ router.use(authenticate);
 router.get('/profile/me', profileController.getMyProfile);
 
 // Student profiles
-router.get('/students',             requireRole('ADMIN', 'FACULTY', 'SUPER_ADMIN', 'STAFF'), profileController.getStudents);
-router.post('/students',            validate(createStudentSchema),                           profileController.createStudent);
-router.get('/students/:userId',     requireRole('ADMIN', 'FACULTY', 'SUPER_ADMIN'),          profileController.getStudent);
-router.patch('/students/:userId',   requireRole('ADMIN', 'SUPER_ADMIN'),                     profileController.updateStudent);
+router.get('/students',             requireRole('ADMIN', 'FACULTY', 'STAFF'), profileController.getStudents);
+router.post('/students',            validate(createStudentSchema),             profileController.createStudent);
+router.get('/students/:userId',     requireRole('ADMIN', 'FACULTY'),          profileController.getStudent);
+router.patch('/students/:userId',   requireRole('ADMIN'),                     profileController.updateStudent);
 
 // Faculty profiles
-router.get('/faculty',              requireRole('ADMIN', 'SUPER_ADMIN', 'STAFF'),            profileController.getFaculty);
-router.post('/faculty',             requireRole('ADMIN', 'SUPER_ADMIN'), validate(createFacultySchema), profileController.createFaculty);
-router.get('/faculty/:userId',                                                               profileController.getFacultyMember);
-router.patch('/faculty/:userId',    requireRole('ADMIN', 'SUPER_ADMIN'),                     profileController.updateFaculty);
+router.get('/faculty',              requireRole('ADMIN', 'STAFF'),            profileController.getFaculty);
+router.post('/faculty',             requireRole('ADMIN'), validate(createFacultySchema), profileController.createFaculty);
+router.get('/faculty/:userId',                                               profileController.getFacultyMember);
+router.patch('/faculty/:userId',    requireRole('ADMIN'),                     profileController.updateFaculty);
 
 // Addresses
 router.get('/addresses',            profileController.getAddresses);

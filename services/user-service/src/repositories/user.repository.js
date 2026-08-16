@@ -29,6 +29,18 @@ class UserRepository {
   }
 
   async deleteById(id) {
+    const StudentProfile = require('../models/StudentProfile.model');
+    const FacultyProfile = require('../models/FacultyProfile.model');
+    const AdminProfile = require('../models/AdminProfile.model');
+    const StaffProfile = require('../models/StaffProfile.model');
+
+    await Promise.all([
+      StudentProfile.deleteMany({ userId: id }).catch(() => {}),
+      FacultyProfile.deleteMany({ userId: id }).catch(() => {}),
+      AdminProfile.deleteMany({ userId: id }).catch(() => {}),
+      StaffProfile.deleteMany({ userId: id }).catch(() => {}),
+    ]);
+
     return User.findByIdAndDelete(id);
   }
 

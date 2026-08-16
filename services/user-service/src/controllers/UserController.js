@@ -47,6 +47,12 @@ class UserController {
     if (!user) throw AppError.notFound('User');
     res.status(200).json({ success: true, data: { message: 'Account unlocked successfully' } });
   });
+
+  getAuditLogs = asyncHandler(async (req, res) => {
+    const LoginAudit = require('../models/LoginAudit.model');
+    const logs = await LoginAudit.find({}).sort({ createdAt: -1 }).limit(100);
+    res.status(200).json({ success: true, data: logs });
+  });
 }
 
 module.exports = new UserController();

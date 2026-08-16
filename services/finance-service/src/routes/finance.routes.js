@@ -11,12 +11,12 @@ router.use(authenticate);
 
 // Invoices
 router.get('/invoices/me', invoice.getMyInvoices);
-router.get('/invoices',    requireRole('ADMIN', 'STAFF', 'SUPER_ADMIN'), invoice.getAll);
+router.get('/invoices', requireRole('ADMIN', 'STAFF', 'SUPER_ADMIN'), invoice.getAll);
 router.get('/invoices/:id', invoice.getOne);
 
 // Payments & Ledger
 router.post('/payments/charge', payment.processPayment);
-router.get('/ledger/balance',  payment.getBalance);
+router.get('/ledger/balance', payment.getBalance);
 router.get('/ledger/balance/:userId', requireRole('ADMIN', 'SUPER_ADMIN'), payment.getBalance);
 router.get('/ledger/account/:accountId', requireRole('ADMIN', 'SUPER_ADMIN'), payment.getLedger);
 

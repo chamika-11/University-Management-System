@@ -11,7 +11,12 @@ const errorHandler = require('./middlewares/errorHandler.middleware');
 const app = express();
 
 app.use(helmet());
-app.use(cors());
+app.use(cors({
+  origin: (origin, callback) => callback(null, origin || true),
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'x-request-id'],
+}));
 app.use(requestLogger);
 app.use(globalLimiter);
 
@@ -19,9 +24,10 @@ app.use(globalLimiter);
 app.use('/api/v1/auth/login', authLimiter);
 app.use('/api/v1/auth/register', authLimiter);
 
-// Express body parsers
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+// NOTE: express.json() is intentionally NOT added here.
+// Adding it would consume the request body stream, which breaks
+// HTTP proxy forwarding (the proxied service would receive an empty body).
+// Each downstream microservice parses its own request body.
 
 // Mounting routes
 app.use('/health', healthRoutes);

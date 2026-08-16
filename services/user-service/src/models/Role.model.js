@@ -10,7 +10,7 @@ const roleSchema = new mongoose.Schema(
       unique: true,
       uppercase: true,
       trim: true,
-      enum: ['STUDENT', 'FACULTY', 'ADMIN', 'STAFF', 'SUPER_ADMIN'],
+      enum: ['STUDENT', 'FACULTY', 'ADMIN', 'STAFF'],
     },
     description: { type: String, default: '' },
     permissions: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Permission' }],
